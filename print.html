@@ -5,8 +5,12 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         .container {
-            width: 300px;
+            /* width: 300px; */
             margin: 50px;
+            font-size:42px;
+        }
+        .value {
+            font-weight: 800;
         }
     </style>
 </head>
@@ -16,28 +20,28 @@
         <div class="row border-bottom">
 
             <div class="col">Item Sold</div>
-            <div class="col" id="itemSold"></div>
+            <div class="col value" id="itemSold"></div>
         </div>
 
         <div class="row border-bottom">
 
             <div class="col">Date</div>
-            <div class="col" id="date"></div>
+            <div class="col value" id="date"></div>
         </div>
         <div class="row border-bottom">
 
             <div class="col">Quantity</div>
-            <div class="col" id="quantity"></div>
+            <div class="col value" id="quantity"></div>
         </div>
         <div class="row border-bottom">
 
             <div class="col">Section</div>
-            <div class="col" id="section"></div>
+            <div class="col value" id="section"></div>
         </div>
         
         <div class="row">
             <div class="col">Price</div>
-            <div class="col" id="price"></div>
+            <div class="col value" id="price"></div>
         </div>
     </div>
     </div>
@@ -63,7 +67,7 @@
     document.getElementById("section").innerHTML = section;
     document.getElementById("price").innerHTML = price;
 
-    window.onload = function () { window.print(); }
+    // window.onload = function () { window.print(); }
     // file:///Users/enzzure/Desktop/htmltest.html?itemSold=Lion%20King&date=2022-01-01&quantity=3&section=Mezzaine&price=$123
 
 
