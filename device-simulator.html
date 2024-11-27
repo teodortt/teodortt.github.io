@@ -70,7 +70,8 @@
       }
 
       input[type="checkbox"] {
-        width: auto;
+        width: 20px;
+        height: 20px;
         margin-right: 10px;
       }
 
@@ -130,6 +131,9 @@
         <button type="button" onclick="handleSubmitForm(), repeatSubmitForm()">
           Submit Device Status
         </button>
+        <button type="button" onclick="handleLogout()" style="background: #ccc">
+          Logout
+        </button>
         <p class="message" id="statusMessage"></p>
         <p class="message" id="message"></p>
       </div>
@@ -162,7 +166,6 @@
 
       let accessToken = localStorage.getItem("accessToken");
 
-      // Show appropriate UI
       if (accessToken) {
         appContent.style.display = "block";
       } else {
@@ -194,7 +197,6 @@
           loginForm.style.display = "none";
           appContent.style.display = "block";
 
-          // Start uploading device status immediately and set the interval
           handleSubmitForm();
           repeatSubmitForm(); // Trigger every 3 seconds
         } catch (error) {
@@ -221,7 +223,7 @@
         aumLoggedInUserId: 1,
         batteryLevel: 70,
         currentPouchId: 2,
-        currentTakingTime: "2024-03-29T12:00:00",
+        currentTakingTime: new Date().toISOString(),
         drawerState: ["Closed", "Open", "NearlyFull", "Full"],
         deviceInfoInterval: 11,
         lidState: ["Closed", "Open", "UnauthorizedOpen"],
@@ -304,8 +306,8 @@
             new Date(devicePayloadOptions[key]) !== "Invalid Date" &&
             !isNaN(new Date(devicePayloadOptions[key]))
           ) {
-            input.type = "date";
-            input.value = devicePayloadOptions[key].slice(0, 10);
+            input.type = "datetime-local";
+            input.value = devicePayloadOptions[key].slice(0, 16);
           } else {
             input.type = "text";
             input.value = devicePayloadOptions[key];
@@ -344,7 +346,7 @@
           }
 
           document.getElementById("statusMessage").textContent =
-            "Device status submitted successfully!";
+            "Device status submitted successfully! This form will be submitted each 90 seconds.";
         } catch (error) {
           console.error("Error during status submission:", error);
           document.getElementById("statusMessage").textContent =
@@ -353,6 +355,11 @@
       }
 
       const repeatSubmitForm = () => setInterval(handleSubmitForm, 3000);
+
+      const handleLogout = () => {
+        localStorage.clear("accessToken");
+        location.reload();
+      };
     </script>
   </body>
 </html>
