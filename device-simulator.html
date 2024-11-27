@@ -350,7 +350,8 @@
         } catch (error) {
           console.error("Error during status submission:", error);
           document.getElementById("statusMessage").textContent =
-            "Failed to submit device status.";
+            "Failed to submit device status. Please try to login again.";
+          localStorage.clear("accessToken");
         }
       }
 
