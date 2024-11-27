@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Device Status App</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f7f9fc;
+        margin: 0;
+        padding: 20px;
+      }
+
+      #app {
+        margin: auto;
+      }
+
+      #login-form {
+        width: 260px;
+        margin: auto;
+        background: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+      }
+
+      #uploadDeviceStatus {
+        margin: auto;
+        background: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: grid;
+        grid-template-columns: repeat(
+          6,
+          1fr
+        ); /* Create 6 equal-width columns */
+
+        gap: 15px;
+        align-items: start;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        color: #555;
+        padding-top: 10px;
+        height: 40px;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input[type="checkbox"] {
+        width: auto;
+        margin-right: 10px;
+      }
+
+      button {
+        margin-top: 20px;
+        grid-column: 1 / -1;
+        padding: 12px;
+        font-size: 1rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      p.message {
+        grid-column: 1 / -1;
+        margin-top: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+      }
+
+      p.message.success {
+        color: #28a745;
+      }
+
+      p.message.error {
+        color: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="login-form" style="display: none">
+        <form style="display: flex; flex-direction: column">
+          <label>
+            Username:
+            <input id="username" type="text" value="04-00001-23" />
+          </label>
+          <label>
+            Password:
+            <input id="password" type="password" value="04-00001-23" />
+          </label>
+          <button style="width: 260px" type="button" onclick="handleLogin()">
+            Login
+          </button>
+        </form>
+      </div>
+
+      <div id="uploadDeviceStatus" style="display: none">
+        <form id="deviceForm"></form>
+        <button type="button" onclick="handleSubmitForm(), repeatSubmitForm()">
+          Submit Device Status
+        </button>
+        <p class="message" id="statusMessage"></p>
+        <p class="message" id="message"></p>
+      </div>
+    </div>
+
+    <script>
+      const devicePayload = {
+        appStartupFlowState: "UpdateData",
+        aumLoggedInUserId: 1,
+        batteryLevel: 70,
+        currentPouchId: 2,
+        currentTakingTime: "2024-03-29T12:00:00",
+        drawerState: "Closed",
+        deviceInfoInterval: 11,
+        lidState: "Closed",
+        medicationFlowState: "MedicationPaused",
+        pouchRollInLeftMechanic: 3,
+        pouchRollInRightMechanic: 4,
+        powerSupplyIsOn: true,
+        prepareMedicationFlowState: "SearchForPouch",
+        progressUntilDue: 5.6,
+        remoteCommandInterval: 60,
+        specialCondition: "UnderSupportMaintenance",
+      };
+
+      const loginForm = document.getElementById("login-form");
+      const appContent = document.getElementById("uploadDeviceStatus");
+      const statusMessageElement = document.getElementById("statusMessage");
+      const messageElement = document.getElementById("message");
+
+      let accessToken = localStorage.getItem("accessToken");
+
+      // Show appropriate UI
+      if (accessToken) {
+        appContent.style.display = "block";
+      } else {
+        loginForm.style.display = "block";
+      }
+
+      async function handleLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        try {
+          const response = await fetch(
+            "https://device-api.smila-cloud.dev.jdm.de/device-api/authentication/login",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          localStorage.setItem("accessToken", data.accessToken);
+          accessToken = data.accessToken;
+
+          loginForm.style.display = "none";
+          appContent.style.display = "block";
+
+          // Start uploading device status immediately and set the interval
+          handleSubmitForm();
+          repeatSubmitForm(); // Trigger every 3 seconds
+        } catch (error) {
+          console.error("Error during login:", error);
+          messageElement.textContent = "Login failed. Please try again.";
+        }
+      }
+
+      const devicePayloadOptions = {
+        appStartupFlowState: [
+          "UpdateData",
+          "PingHardware",
+          "HardwareConnectionError",
+          "GetHardwareStatus",
+          "HardwareError",
+          "EvaluateCurrent",
+          "StartPouchPictureDeletionFlow",
+          "StartBatteryHousekeepingFlow",
+          "StartSmilaSetupFlow",
+          "StartSmilaOnboardingFlow",
+          "StartMedicationFlow",
+          "RefreshCloudToken",
+        ],
+        aumLoggedInUserId: 1,
+        batteryLevel: 70,
+        currentPouchId: 2,
+        currentTakingTime: "2024-03-29T12:00:00",
+        drawerState: ["Closed", "Open", "NearlyFull", "Full"],
+        deviceInfoInterval: 11,
+        lidState: ["Closed", "Open", "UnauthorizedOpen"],
+        medicationFlowState: [
+          "MedicationPaused",
+          "WaitingForMedicationPlan",
+          "WaitingForRoll",
+          "PrepareMedication",
+          "Idle",
+          "MedicationDue",
+          "TakingTimeSoonOver",
+          "MedicationMissed",
+          "CutAndDispense",
+          "CutAndDrop",
+          "TakeMedication",
+          "NotWithdrawn",
+          "DispenseFailed",
+          "DropFailed",
+        ],
+        pouchRollInLeftMechanic: 3,
+        pouchRollInRightMechanic: 4,
+        powerSupplyIsOn: true,
+        prepareMedicationFlowState: [
+          "SearchForPouch",
+          "EndSwitchNotTriggered",
+          "NotAllowedToPrepare",
+          "BarcodeNotFound",
+          "WrongBarcode",
+          "SetBackupDispenseTime",
+          "TakeCuttingOffsetImage",
+          "CalculateCuttingOffset",
+          "EscalateCuttingOffset",
+          "PouchNotInCuttablePosition",
+          "RecalculateOffset",
+          "SetCuttingOffset",
+        ],
+        progressUntilDue: 5.6,
+        remoteCommandInterval: 60,
+        specialCondition: [
+          "None",
+          "UnderSupportMaintenance",
+          "GoingToHibernate",
+          "RestartForAppUpdate",
+          "RestartFromAum",
+          "GoingToShutDown",
+        ],
+      };
+
+      // Generate the form fields dynamically
+      const form = document.getElementById("deviceForm");
+
+      Object.keys(devicePayloadOptions).forEach((key) => {
+        const label = document.createElement("label");
+        label.textContent = key;
+
+        if (Array.isArray(devicePayloadOptions[key])) {
+          // Create a dropdown for fields with predefined values
+          const select = document.createElement("select");
+          select.name = key;
+          devicePayloadOptions[key].forEach((value) => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            select.appendChild(option);
+          });
+          form.appendChild(label);
+          form.appendChild(select);
+        } else {
+          // Create an input field for other types
+          const input = document.createElement("input");
+          input.name = key;
+
+          if (typeof devicePayloadOptions[key] === "number") {
+            input.type = "number";
+            input.value = devicePayloadOptions[key];
+          } else if (typeof devicePayloadOptions[key] === "boolean") {
+            input.type = "checkbox";
+            input.checked = devicePayloadOptions[key];
+          } else if (
+            new Date(devicePayloadOptions[key]) !== "Invalid Date" &&
+            !isNaN(new Date(devicePayloadOptions[key]))
+          ) {
+            input.type = "date";
+            input.value = devicePayloadOptions[key].slice(0, 10);
+          } else {
+            input.type = "text";
+            input.value = devicePayloadOptions[key];
+          }
+          form.appendChild(label);
+          form.appendChild(input);
+        }
+      });
+
+      async function handleSubmitForm() {
+        const formData = new FormData(form);
+        const payload = {};
+
+        for (const [key, value] of formData.entries()) {
+          payload[key] = value;
+        }
+
+        // Convert boolean inputs back to boolean
+        payload.powerSupplyIsOn = form.powerSupplyIsOn.checked;
+
+        try {
+          const response = await fetch(
+            "https://device-api.smila-cloud.dev.jdm.de/device-api/devicestatusinfo",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          document.getElementById("statusMessage").textContent =
+            "Device status submitted successfully!";
+        } catch (error) {
+          console.error("Error during status submission:", error);
+          document.getElementById("statusMessage").textContent =
+            "Failed to submit device status.";
+        }
+      }
+
+      const repeatSubmitForm = () => setInterval(handleSubmitForm, 3000);
+    </script>
+  </body>
+</html>
