@@ -144,9 +144,24 @@ p.message.error {
 }
 
 #theme-icon {
-  margin-right: 8px;
+  display: inline-block;
   font-size: 18px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.theme-icon-rotate {
+  animation: rotateIn 0.5s ease;
+}
+
+@keyframes rotateIn {
+  from {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
 }
 
 .flexContent {
@@ -160,6 +175,7 @@ p.message.error {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   gap: 30px;
   padding-top: 30px;
 
@@ -237,5 +253,9 @@ p.message.error {
 
   label {
     height: auto;
+  }
+
+  .actions {
+    justify-content: center;
   }
 }

@@ -19,10 +19,12 @@ const devicePayload = {
 
 const loginForm = document.getElementById("login-form");
 const appContent = document.getElementById("uploadDeviceStatus");
-const statusMessageElement = document.getElementById("statusMessage");
-const messageElement = document.getElementById("message");
+const statusMessage = document.getElementById("statusMessage");
+const repeatToggle = document.getElementById('repeatToggle');
+const submitButton = document.getElementById("submitButton");
 
 let accessToken = localStorage.getItem("accessToken");
+let intervalRequestId, intervalCounterId;
 
 if (accessToken) {
     appContent.style.display = "block";
@@ -204,11 +206,9 @@ async function updateDeviceStatus() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        document.getElementById("statusMessage").textContent =
-            "Device status submitted successfully! This form will automatically submit every 60 seconds.";
     } catch (error) {
         console.error("Error during status submission:", error);
-        document.getElementById("statusMessage").textContent =
+        statusMessage.textContent =
             "Failed to submit device status. Please try to login again.";
         localStorage.clear("accessToken");
     }
@@ -217,13 +217,32 @@ async function updateDeviceStatus() {
 const handleSubmitForm = () => {
     updateDeviceStatus();
 
-    let isRepeatEnabled = document.getElementById("repeatToggle").checked;
-    let submitButton = document.getElementById("submitButton");
-
-    if (isRepeatEnabled) {
-        setInterval(updateDeviceStatus, 60000);
+    if (repeatToggle.checked) {
+        intervalRequestId = setInterval(updateDeviceStatus, 60000);
         submitButton.disabled = true;
+
+        let countdown = 60;
+
+        intervalCounterId = setInterval(() => {
+            countdown--;
+            if (countdown >= 0) {
+                statusMessage.textContent =
+                    `Device status submitted successfully! This form will automatically submit in ${countdown} seconds.`;
+            }
+
+            if (countdown < 0) {
+                clearInterval(intervalCounterId);
+            }
+        }, 1000);
     }
+
+}
+
+const handleClearInterval = () => {
+    clearInterval(intervalRequestId);
+    clearInterval(intervalCounterId);
+    statusMessage.textContent = "";
+    submitButton.disabled = false;
 }
 
 const handleLogout = () => {
@@ -231,9 +250,38 @@ const handleLogout = () => {
     location.reload();
 };
 
-function toggleTheme(theme = null) {
-    const icon = document.getElementById("theme-icon");
+const checkTokenExpiry = () => {
+    const accessToken = localStorage.getItem('accessToken');
 
+    if (!accessToken) {
+        console.log('No access token found.');
+        return;
+    }
+
+    try {
+        const payloadBase64 = accessToken.split('.')[1];
+        const payloadJson = atob(payloadBase64);
+        const payload = JSON.parse(payloadJson);
+
+        if (!payload.exp) {
+            console.log('No expiration time (exp) in token.');
+            return;
+        }
+
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (payload.exp < currentTime) {
+            localStorage.removeItem('accessToken');
+            location.reload();
+        } else {
+            console.log('Token is valid.');
+        }
+    } catch (error) {
+        console.error('Error decoding token:', error);
+    }
+}
+
+const toggleTheme = (theme = null) => {
+    const icon = document.getElementById("theme-icon");
 
     let currentTheme = theme || localStorage.getItem("theme") || "dark";
     if (!theme) {
@@ -248,6 +296,9 @@ function toggleTheme(theme = null) {
         currentTheme === "dark" ? "white" : "#282828";
     icon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
 
+    // Animate icon
+    icon.classList.add('theme-icon-rotate');
+    setTimeout(() => icon.classList.remove('theme-icon-rotate'), 500);
 
     const backgroundColor = currentTheme === "dark" ? "#161515" : "white";
     document.getElementById("login-form").style.backgroundColor =
@@ -258,6 +309,13 @@ function toggleTheme(theme = null) {
     localStorage.setItem("theme", currentTheme);
 }
 
-document.addEventListener("DOMContentLoaded", () =>
-    toggleTheme(localStorage.getItem("theme"))
-);
+document.addEventListener("DOMContentLoaded", () => {
+    checkTokenExpiry();
+    toggleTheme(localStorage.getItem("theme"));
+});
+
+repeatToggle.addEventListener('change', () => {
+    if (!repeatToggle.checked) {
+        handleClearInterval();
+    }
+});
