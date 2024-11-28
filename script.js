@@ -230,8 +230,8 @@ const handleSubmitForm = () => {
                     `Device status submitted successfully! This form will automatically submit in ${countdown} seconds.`;
             }
 
-            if (countdown < 0) {
-                clearInterval(intervalCounterId);
+            if (countdown < 1) {
+                countdown = 60;
             }
         }, 1000);
     }
