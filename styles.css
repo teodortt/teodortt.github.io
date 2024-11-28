@@ -2,21 +2,58 @@ body {
   font-family: "Arial", sans-serif;
   background-color: #f7f9fc;
   margin: 0;
-  padding: 20px;
 }
 
 #app {
   margin: auto;
+  padding: 20px;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem 1rem 1rem;
+  background: #212a35;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav li {
+  padding-left: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #ffffff;
 }
 
 #login-form {
+  height: 260px;
   width: 260px;
-  margin: auto;
+  text-align: center;
+  margin: 100px auto;
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px;
   transition: background-color 0.3s, color 0.3s;
+
+  label {
+    text-align: left;
+  }
 }
 
 #uploadDeviceStatus {

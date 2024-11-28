@@ -17,6 +17,7 @@ const devicePayload = {
     specialCondition: "UnderSupportMaintenance",
 };
 
+const navbar = document.getElementById('nav');
 const loginForm = document.getElementById("login-form");
 const appContent = document.getElementById("uploadDeviceStatus");
 const statusMessage = document.getElementById("statusMessage");
@@ -28,6 +29,7 @@ let intervalRequestId, intervalCounterId;
 
 if (accessToken) {
     appContent.style.display = "block";
+    navbar.style.display = "flex";
 } else {
     loginForm.style.display = "block";
 }
@@ -56,6 +58,7 @@ async function handleLogin() {
 
         loginForm.style.display = "none";
         appContent.style.display = "block";
+        navbar.style.display = "flex";
     } catch (error) {
         console.error("Error during login:", error);
         messageElement.textContent = "Login failed. Please try again.";
@@ -291,16 +294,16 @@ const toggleTheme = (theme = null) => {
     }
 
     document.body.style.backgroundColor =
-        currentTheme === "dark" ? "#282828" : "#f7f9fc";
+        currentTheme === "dark" ? "#161515" : "#f7f9fc";
     document.body.style.color =
-        currentTheme === "dark" ? "white" : "#282828";
+        currentTheme === "dark" ? "white" : "#161515";
     icon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
 
     // Animate icon
     icon.classList.add('theme-icon-rotate');
     setTimeout(() => icon.classList.remove('theme-icon-rotate'), 500);
 
-    const backgroundColor = currentTheme === "dark" ? "#161515" : "white";
+    const backgroundColor = currentTheme === "dark" ? "#282828" : "white";
     document.getElementById("login-form").style.backgroundColor =
         backgroundColor;
     document.getElementById("uploadDeviceStatus").style.backgroundColor =
