@@ -1,0 +1,241 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f7f9fc;
+  margin: 0;
+  padding: 20px;
+}
+
+#app {
+  margin: auto;
+}
+
+#login-form {
+  width: 260px;
+  margin: auto;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#uploadDeviceStatus {
+  margin: auto;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* Create 6 equal-width columns */
+
+  gap: 15px;
+  align-items: start;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  padding-top: 10px;
+  height: 40px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path fill="gray" d="M0 3l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 12px;
+}
+
+input[type="checkbox"]:not(.toggle) {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 12px;
+  font-size: 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  color: silver;
+  background-color: rgb(45, 57, 73);
+}
+
+p.message {
+  grid-column: 1 / -1;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+p.message.success {
+  color: #28a745;
+}
+
+p.message.error {
+  color: #dc3545;
+}
+
+/* THHEME ICON */
+.theme-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 25px;
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.theme-button:hover {
+  transform: scale(1.05);
+  background-color: #534bf2;
+}
+
+.theme-button:active {
+  transform: scale(1);
+  background-color: #463bcc;
+}
+
+#theme-icon {
+  margin-right: 8px;
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.flexContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 30px;
+  padding-top: 30px;
+
+  label {
+    height: 25px;
+  }
+}
+
+/* Styling for the toggle switch */
+
+.toggle {
+  all: unset;
+  appearance: none;
+  position: relative;
+  display: inline-block;
+  box-sizing: content-box;
+  width: 4.5em;
+  height: 2em;
+  padding: 0.2em;
+  border: none;
+  cursor: pointer;
+  border-radius: 1.5em;
+  overflow: hidden;
+  background-color: #707070;
+  transition: background ease 0.3s;
+}
+
+.toggle:before {
+  content: "on off";
+  display: block;
+  position: absolute;
+  z-index: 2;
+  width: 2em;
+  height: 2em;
+  font-family: system-ui;
+  font-size: 1em;
+  line-height: 2em;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-indent: -2em;
+  word-spacing: 2.55em;
+  text-shadow: -1px -1px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  background: #fff;
+  color: #fff;
+  border-radius: 1.5em;
+  transition: transform cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s;
+}
+
+.toggle:checked {
+  background-color: #007bff;
+}
+
+.toggle:checked:before {
+  transform: translateX(2.5em);
+}
+/* MOBILE STYLES */
+
+@media (max-width: 1200px) {
+  form {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  label {
+    height: auto;
+  }
+}
