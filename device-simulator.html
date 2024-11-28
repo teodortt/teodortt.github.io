@@ -51,6 +51,24 @@
         align-items: start;
       }
 
+      @media (max-width: 1200px) {
+        form {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        form {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 480px) {
+        form {
+          grid-template-columns: 1fr;
+        }
+      }
+
       label {
         display: block;
         font-weight: bold;
