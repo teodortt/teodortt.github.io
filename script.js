@@ -105,7 +105,6 @@ const devicePayloadOptions = {
     ],
     pouchRollInLeftMechanic: 3,
     pouchRollInRightMechanic: 4,
-    powerSupplyIsOn: true,
     prepareMedicationFlowState: [
         "SearchForPouch",
         "EndSwitchNotTriggered",
@@ -130,6 +129,7 @@ const devicePayloadOptions = {
         "RestartFromAum",
         "GoingToShutDown",
     ],
+    powerSupplyIsOn: true,
 };
 
 // Generate the form fields dynamically
@@ -249,7 +249,7 @@ const handleClearInterval = () => {
 }
 
 const handleLogout = () => {
-    localStorage.clear("accessToken");
+    localStorage.removeItem("accessToken");
     location.reload();
 };
 
@@ -273,8 +273,7 @@ const checkTokenExpiry = () => {
 
         const currentTime = Math.floor(Date.now() / 1000);
         if (payload.exp < currentTime) {
-            localStorage.removeItem('accessToken');
-            location.reload();
+            handleLogout();
         } else {
             console.log('Token is valid.');
         }
