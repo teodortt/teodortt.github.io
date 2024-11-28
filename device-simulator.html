@@ -23,6 +23,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         padding: 20px;
+        transition: background-color 0.3s, color 0.3s;
       }
 
       #uploadDeviceStatus {
@@ -31,6 +32,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         padding: 20px;
+        transition: background-color 0.3s, color 0.3s;
       }
 
       h1 {
@@ -124,6 +126,26 @@
       p.message.error {
         color: #dc3545;
       }
+
+      #theme-button {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        display: block;
+        height: 50px;
+        width: 50px;
+        font-size: 8px;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        background-color: #3a444f;
+        color: white;
+        transition: background-color 0.3s;
+      }
+      #theme-button:hover {
+        background-color: #9e6c2b;
+      }
     </style>
   </head>
   <body>
@@ -156,6 +178,8 @@
         <p class="message" id="message"></p>
       </div>
     </div>
+
+    <button id="theme-button" onclick="toggleTheme()">Switch Theme</button>
 
     <script>
       const devicePayload = {
@@ -376,6 +400,30 @@
         localStorage.clear("accessToken");
         location.reload();
       };
+
+      function toggleTheme(theme = null) {
+        let currentTheme = theme || localStorage.getItem("theme") || "dark";
+        if (!theme) {
+          currentTheme = currentTheme === "dark" ? "light" : "dark";
+        }
+
+        document.body.style.backgroundColor =
+          currentTheme === "dark" ? "#282828" : "#f7f9fc";
+        document.body.style.color =
+          currentTheme === "dark" ? "white" : "#282828";
+
+        const backgroundColor = currentTheme === "dark" ? "#161515" : "white";
+        document.getElementById("login-form").style.backgroundColor =
+          backgroundColor;
+        document.getElementById("uploadDeviceStatus").style.backgroundColor =
+          backgroundColor;
+
+        localStorage.setItem("theme", currentTheme);
+      }
+
+      document.addEventListener("DOMContentLoaded", () =>
+        toggleTheme(localStorage.getItem("theme"))
+      );
     </script>
   </body>
 </html>
