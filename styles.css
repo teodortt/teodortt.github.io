@@ -41,7 +41,7 @@ nav a {
 }
 
 #login-form {
-  height: 260px;
+  min-height: 260px;
   width: 260px;
   text-align: center;
   margin: 100px auto;
@@ -96,6 +96,12 @@ select {
   border-radius: 4px;
   box-sizing: border-box;
   height: 40px;
+  transition: box-shadow 0.3s ease;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px hsla(220, 90%, 50%, 0.8);
+  }
 }
 
 select {
@@ -238,6 +244,11 @@ p.message.error {
   overflow: hidden;
   background-color: #707070;
   transition: background ease 0.3s;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
 }
 
 .toggle:before {

@@ -290,7 +290,6 @@ const toggleTheme = (theme = null) => {
     if (!theme) {
         currentTheme = currentTheme === "dark" ? "light" : "dark";
         icon.textContent = currentTheme === "dark" ? "🌙" : "☀️";
-
     }
 
     document.body.style.backgroundColor =
