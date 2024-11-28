@@ -209,6 +209,8 @@ async function updateDeviceStatus() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
+        return true;
+
     } catch (error) {
         console.error("Error during status submission:", error);
         statusMessage.textContent =
@@ -218,26 +220,34 @@ async function updateDeviceStatus() {
 }
 
 const handleSubmitForm = () => {
-    updateDeviceStatus();
+    updateDeviceStatus().then((status) => {
 
-    if (repeatToggle.checked) {
-        intervalRequestId = setInterval(updateDeviceStatus, 60000);
-        submitButton.disabled = true;
+        if (status) {
+            if (repeatToggle.checked) {
+                intervalRequestId = setInterval(updateDeviceStatus, 60000);
+                submitButton.disabled = true;
 
-        let countdown = 60;
+                let countdown = 60;
 
-        intervalCounterId = setInterval(() => {
-            countdown--;
-            if (countdown >= 0) {
-                statusMessage.textContent =
-                    `Device status submitted successfully! This form will automatically submit in ${countdown} seconds.`;
+                intervalCounterId = setInterval(() => {
+                    countdown--;
+                    if (countdown >= 0) {
+                        statusMessage.textContent =
+                            `Device status submitted successfully! This form will automatically submit in ${countdown} seconds.`;
+                    }
+
+                    if (countdown < 1) {
+                        countdown = 60;
+                    }
+                }, 1000);
+            } else {
+                statusMessage.textContent = `Device status submitted successfully!`;
             }
-
-            if (countdown < 1) {
-                countdown = 60;
-            }
-        }, 1000);
-    }
+            return;
+        }
+        statusMessage.textContent =
+            "Failed to submit device status. Please try to login again.";
+    });
 
 }
 
