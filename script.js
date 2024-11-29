@@ -214,8 +214,8 @@ async function updateDeviceStatus() {
     } catch (error) {
         console.error("Error during status submission:", error);
         statusMessage.textContent =
-            "Failed to submit device status. Please try to login again.";
-        localStorage.clear("accessToken");
+            "Failed to submit device status.";
+        checkTokenExpiry();
     }
 }
 
