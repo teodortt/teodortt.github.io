@@ -1,0 +1,233 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 #EXTM3U catchup="flussonic" url-tvg="https://github.com/harrygg/EPG/raw/refs/heads/master/all-2days.details.epg.xml.gz"\
+#EXTINF:0 tvg-name="\uc0\u1041 \u1053 \u1058 1" tvg-logo="https://ip-tv.dev/images/ico/bnt1.png" , \u1041 \u1053 \u1058 1\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6800/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="bTV" tvg-logo="https://ip-tv.dev/images/ico/btv.png" , bTV\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6804/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Nova HD" tvg-logo="https://ip-tv.dev/images/ico/novahd.png" , Nova HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6803/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Diema" tvg-logo="https://ip-tv.dev/images/ico/diemach.png" , Diema\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6808/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="KinoNova" tvg-logo="https://ip-tv.dev/images/ico/kinonova.png" , KinoNova\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6807/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Diema Sport" tvg-logo="https://ip-tv.dev/images/ico/diema.png" , Diema Sport\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6830/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Diema Sport 2" tvg-logo="https://ip-tv.dev/images/ico/diema2.png" , Diema Sport 2\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6831/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Diema Sport 3" tvg-logo="https://ip-tv.dev/images/ico/diema3.png" , Diema Sport 3\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6832/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Max Sport 1 HD" tvg-logo="https://ip-tv.dev/images/ico/max1.png" , Max Sport 1 HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6875/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Max Sport 2 HD" tvg-logo="https://ip-tv.dev/images/ico/max2.png" , Max Sport 2 HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6876/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Max Sport 3 HD" tvg-logo="https://ip-tv.dev/images/ico/max3.png" , Max Sport 3 HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6877/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Max Sport 4 HD" tvg-logo="https://ip-tv.dev/images/ico/max4.png" , Max Sport 4 HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6878/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="bTV Action" tvg-logo="https://ip-tv.dev/images/ico/baction.png" , bTV Action\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6810/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="bTV Comedy" tvg-logo="https://ip-tv.dev/images/ico/bcomedy.png" , bTV Comedy\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6811/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="bTV Cinema" tvg-logo="https://ip-tv.dev/images/ico/bcinema.png" , bTV Cinema\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6812/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1041 \u1053 \u1058 2" tvg-logo="https://ip-tv.dev/images/ico/bnt2.png" , \u1041 \u1053 \u1058 2\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6801/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1041 \u1053 \u1058 4" tvg-logo="https://ip-tv.dev/images/ico/bnt4.png" , \u1041 \u1053 \u1058 4\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6802/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1050 \u1072 \u1085 \u1072 \u1083  3", \u1050 \u1072 \u1085 \u1072 \u1083  3\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6899/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="7/8 TV" tvg-logo="https://ip-tv.dev/images/ico/78.png" , 7/8 TV\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6874/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Evrokom" tvg-logo="https://ip-tv.dev/images/ico/evrokom.png" , Evrokom\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6805/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1041 \u1043 +" tvg-logo="https://ip-tv.dev/images/ico/bgplus.png" , \u1041 \u1043 +\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6806/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Diema Family" tvg-logo="https://ip-tv.dev/images/ico/diemafamily.png" , Diema Family\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6809/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="HBO 1 HD", HBO 1 HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6896/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="HBO 2 HD", HBO 2 HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6897/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="HBO 3 HD", HBO 3 HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6898/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Cinamenia HD" tvg-logo="https://ip-tv.dev/images/ico/cinemania.png" , Cinamenia HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6815/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Nostalgia HD" tvg-logo="https://ip-tv.dev/images/ico/nostalgia.png" , Nostalgia HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6816/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="AXN" tvg-logo="https://ip-tv.dev/images/ico/axn.png" , AXN\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6817/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="AXN Black" tvg-logo="https://ip-tv.dev/images/ico/axnblack.png" , AXN Black\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6818/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="AXN White" tvg-logo="https://ip-tv.dev/images/ico/axnwhite.png" , AXN White\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6819/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="National Geographic" tvg-logo="https://ip-tv.dev/images/ico/nationalbg.png" , National Geographic\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6820/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Nat Geo Wild" tvg-logo="https://ip-tv.dev/images/ico/natgeobg.png" , Nat Geo Wild\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6821/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="the world" tvg-logo="https://ip-tv.dev/images/ico/theworld.png" , the world\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6814/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Travel" tvg-logo="https://ip-tv.dev/images/ico/travelbg.png" , Travel\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6822/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="This is Bulgaria" tvg-logo="https://ip-tv.dev/images/ico/thisisbulgaria.png" , This is Bulgaria\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6823/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="The Fishing&Hunting Channel HD" tvg-logo="https://ip-tv.dev/images/ico/fishinghuntinghd.png" , The Fishing&Hunting Channel HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6894/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1042 \u1058 \u1050 " tvg-logo="https://ip-tv.dev/images/ico/vtk.png" , \u1042 \u1058 \u1050 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6824/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Nova Sport" tvg-logo="https://ip-tv.dev/images/ico/novasport.png" , Nova Sport\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6827/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Ring" tvg-logo="https://ip-tv.dev/images/ico/ring.png" , Ring\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6828/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1041 \u1053 \u1058 3" tvg-logo="https://ip-tv.dev/images/ico/bnt3.png" , \u1041 \u1053 \u1058 3\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6825/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Auto Motor Sport HD" tvg-logo="https://ip-tv.dev/images/ico/amshd.png" , Auto Motor Sport HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6893/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Nickelodeon" tvg-logo="https://ip-tv.dev/images/ico/nikelodeonbg.png" , Nickelodeon\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6833/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Nick Jr" tvg-logo="https://ip-tv.dev/images/ico/nickjrbg.png" , Nick Jr\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6834/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="EKids" tvg-logo="https://ip-tv.dev/images/ico/ekids.png" , EKids\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6835/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Lolly Kids" tvg-logo="https://ip-tv.dev/images/ico/lollykids.png" , Lolly Kids\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6836/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Duck", Duck\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6837/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Fix Foxi", Fix Foxi\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6838/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="CNN" tvg-logo="https://ip-tv.dev/images/ico/cnnbg.png" , CNN\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6839/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-id="Xbbc" tvg-name="BBC" tvg-logo="https://ip-tv.dev/images/ico/bbc.png" , BBC\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6840/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="24 Kitchen" tvg-logo="https://ip-tv.dev/images/ico/4kitchen.png" , 24 Kitchen\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6841/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Euronews Bulgaria" tvg-logo="https://ip-tv.dev/images/ico/euronewsbg.png" , Euronews Bulgaria\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6842/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="BG on AIR" tvg-logo="https://ip-tv.dev/images/ico/gonair.png" , BG on AIR\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6843/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1058 \u1042  \u1057 \u1082 \u1072 \u1090 ", \u1058 \u1042  \u1057 \u1082 \u1072 \u1090 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6845/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1058 \u1077 \u1083 \u1077 \u1074 \u1080 \u1079 \u1080 \u1103  \u1064 \u1091 \u1084 \u1077 \u1085  HD", \u1058 \u1077 \u1083 \u1077 \u1074 \u1080 \u1079 \u1080 \u1103  \u1064 \u1091 \u1084 \u1077 \u1085  HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6846/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="TV1" tvg-logo="https://ip-tv.dev/images/ico/tv1bg.png" , TV1\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6847/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1044 \u1072 \u1088 \u1090 \u1089  \u1058 \u1042 ", \u1044 \u1072 \u1088 \u1090 \u1089  \u1058 \u1042 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6848/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1041 \u1098 \u1083 \u1075 \u1072 \u1088 \u1080 \u1103  24 \u1058 \u1042 ", \u1041 \u1098 \u1083 \u1075 \u1072 \u1088 \u1080 \u1103  24 \u1058 \u1042 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6849/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="CodeFashion HD" tvg-logo="https://ip-tv.dev/images/ico/codefashion.png" , CodeFashion HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6850/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Code Healht HD" tvg-logo="https://ip-tv.dev/images/ico/codehealth.png" , Code Healht HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6851/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1055 \u1083 \u1072 \u1085 \u1077 \u1090 \u1072  HD BG" tvg-logo="https://ip-tv.dev/images/ico/planetabg.png" , \u1055 \u1083 \u1072 \u1085 \u1077 \u1090 \u1072  HD BG\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6853/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Planeta 4K", Planeta 4K\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6873/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1055 \u1083 \u1072 \u1085 \u1077 \u1090 \u1072  \u1060 \u1086 \u1083 \u1082 " tvg-logo="https://ip-tv.dev/images/ico/planetafolk.png" , \u1055 \u1083 \u1072 \u1085 \u1077 \u1090 \u1072  \u1060 \u1086 \u1083 \u1082 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6854/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1060 \u1077 \u1085  \u1058 \u1042 " tvg-logo="https://ip-tv.dev/images/ico/fentv.png" , \u1060 \u1077 \u1085  \u1058 \u1042 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6855/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1058 \u1103 \u1085 \u1082 \u1086 \u1074  \u1054 \u1088 \u1080 \u1077 \u1085 \u1090 " tvg-logo="https://ip-tv.dev/images/ico/tiankov.png" , \u1058 \u1103 \u1085 \u1082 \u1086 \u1074  \u1054 \u1088 \u1080 \u1077 \u1085 \u1090 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6856/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1058 \u1103 \u1085 \u1082 \u1086 \u1074  \u1060 \u1086 \u1083 \u1082 " tvg-logo="https://ip-tv.dev/images/ico/iankovfolk.png" , \u1058 \u1103 \u1085 \u1082 \u1086 \u1074  \u1060 \u1086 \u1083 \u1082 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6857/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1041 \u1072 \u1083 \u1082 \u1072 \u1085 \u1080 \u1082 \u1072 " tvg-logo="https://ip-tv.dev/images/ico/balkanikabg.png" , \u1041 \u1072 \u1083 \u1082 \u1072 \u1085 \u1080 \u1082 \u1072 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6858/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1056 \u1086 \u1076 \u1080 \u1085 \u1072  \u1058 \u1042 " tvg-logo="https://ip-tv.dev/images/ico/rodina.png" , \u1056 \u1086 \u1076 \u1080 \u1085 \u1072  \u1058 \u1042 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6859/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="\uc0\u1060 \u1077 \u1085  \u1060 \u1086 \u1083 \u1082 " tvg-logo="https://ip-tv.dev/images/ico/fenfolk.png" , \u1060 \u1077 \u1085  \u1060 \u1086 \u1083 \u1082 \
+#EXTGRP:BG\
+http://de.seetv.cc/play/6860/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="EuroFolkTV", EuroFolkTV\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6861/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="BG Music HD" tvg-logo="https://ip-tv.dev/images/ico/bgmusic.png" , BG Music HD\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6862/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="DSTV", DSTV\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6863/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="BOX TV" tvg-logo="https://ip-tv.dev/images/ico/boxbg.png" , BOX TV\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6864/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Magic TV" tvg-logo="https://ip-tv.dev/images/ico/magicbg.png" , Magic TV\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6865/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-name="Roma TV" tvg-logo="https://ip-tv.dev/images/ico/romabg.png" , Roma TV\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6866/2943F0CF71E9AB1/video.m3u8\
+#EXTINF:0 tvg-id="Xlove-nature-4k" tvg-name="Love Nature 4K", Love Nature 4K\
+#EXTGRP:BG\
+http://de.seetv.cc/play/6895/2943F0CF71E9AB1/video.m3u8}
