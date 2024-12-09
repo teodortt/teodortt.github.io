@@ -1,11 +1,11 @@
 #EXTM3U catchup="flussonic" url-tvg="https://github.com/harrygg/EPG/raw/refs/heads/master/all-2days.details.epg.xml.gz"
-#EXTINF:0 tvg-name="БНТ1" tvg-logo="https://ip-tv.dev/images/ico/bnt1.png" , БНТ1
+#EXTINF:0 tvg-name="БНТ 1" tvg-logo="https://ip-tv.dev/images/ico/bnt1.png" , БНТ 1
 #EXTGRP:BG
 http://de.seetv.cc/play/6800/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="bTV" tvg-logo="https://ip-tv.dev/images/ico/btv.png" , bTV
 #EXTGRP:BG
 http://de.seetv.cc/play/6804/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="Nova HD" tvg-logo="https://ip-tv.dev/images/ico/novahd.png" , Nova HD
+#EXTINF:0 tvg-name="Nova TV" tvg-logo="https://ip-tv.dev/images/ico/novahd.png" , Nova TV
 #EXTGRP:BG
 http://de.seetv.cc/play/6803/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="Diema" tvg-logo="https://ip-tv.dev/images/ico/diemach.png" , Diema
@@ -44,15 +44,15 @@ http://de.seetv.cc/play/6811/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="bTV Cinema" tvg-logo="https://ip-tv.dev/images/ico/bcinema.png" , bTV Cinema
 #EXTGRP:BG
 http://de.seetv.cc/play/6812/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="БНТ2" tvg-logo="https://ip-tv.dev/images/ico/bnt2.png" , БНТ2
+#EXTINF:0 tvg-name="BNT 2" tvg-logo="https://ip-tv.dev/images/ico/bnt2.png" , BNT 2
 #EXTGRP:BG
 http://de.seetv.cc/play/6801/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="БНТ4" tvg-logo="https://ip-tv.dev/images/ico/bnt4.png" , БНТ4
+#EXTINF:0 tvg-name="BNT 3" tvg-logo="https://ip-tv.dev/images/ico/bnt3.png" , BNT 3
+#EXTGRP:BG
+http://de.seetv.cc/play/6825/2943F0CF71E9AB1/video.m3u8
+#EXTINF:0 tvg-name="BNT 4" tvg-logo="https://ip-tv.dev/images/ico/bnt4.png" , BNT 4
 #EXTGRP:BG
 http://de.seetv.cc/play/6802/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="Канал 3", Канал 3
-#EXTGRP:BG
-http://de.seetv.cc/play/6899/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="7/8 TV" tvg-logo="https://ip-tv.dev/images/ico/78.png" , 7/8 TV
 #EXTGRP:BG
 http://de.seetv.cc/play/6874/2943F0CF71E9AB1/video.m3u8
@@ -98,7 +98,7 @@ http://de.seetv.cc/play/6821/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="the world" tvg-logo="https://ip-tv.dev/images/ico/theworld.png" , the world
 #EXTGRP:BG
 http://de.seetv.cc/play/6814/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="Travel" tvg-logo="https://ip-tv.dev/images/ico/travelbg.png" , Travel
+#EXTINF:0 tvg-name="Travel TV" tvg-logo="https://ip-tv.dev/images/ico/travelbg.png" , Travel TV
 #EXTGRP:BG
 http://de.seetv.cc/play/6822/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="This is Bulgaria" tvg-logo="https://ip-tv.dev/images/ico/thisisbulgaria.png" , This is Bulgaria
@@ -113,12 +113,9 @@ http://de.seetv.cc/play/6824/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="Nova Sport" tvg-logo="https://ip-tv.dev/images/ico/novasport.png" , Nova Sport
 #EXTGRP:BG
 http://de.seetv.cc/play/6827/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="Ring" tvg-logo="https://ip-tv.dev/images/ico/ring.png" , Ring
+#EXTINF:0 tvg-name="Ring BG" tvg-logo="https://ip-tv.dev/images/ico/ring.png" , Ring BG
 #EXTGRP:BG
 http://de.seetv.cc/play/6828/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="БНТ3" tvg-logo="https://ip-tv.dev/images/ico/bnt3.png" , БНТ3
-#EXTGRP:BG
-http://de.seetv.cc/play/6825/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="Auto Motor Sport HD" tvg-logo="https://ip-tv.dev/images/ico/amshd.png" , Auto Motor Sport HD
 #EXTGRP:BG
 http://de.seetv.cc/play/6893/2943F0CF71E9AB1/video.m3u8
@@ -152,10 +149,10 @@ http://de.seetv.cc/play/6841/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="Euronews Bulgaria" tvg-logo="https://ip-tv.dev/images/ico/euronewsbg.png" , Euronews Bulgaria
 #EXTGRP:BG
 http://de.seetv.cc/play/6842/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="BG on AIR" tvg-logo="https://ip-tv.dev/images/ico/gonair.png" , BG on AIR
+#EXTINF:0 tvg-name="bgonair.bg" tvg-logo="https://ip-tv.dev/images/ico/gonair.png" , bgonair.bg
 #EXTGRP:BG
 http://de.seetv.cc/play/6843/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="ТВ Скат", ТВ Скат
+#EXTINF:0 tvg-name="skat.bg", skat.bg
 #EXTGRP:BG
 http://de.seetv.cc/play/6845/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="Телевизия Шумен HD", Телевизия Шумен HD
@@ -164,24 +161,18 @@ http://de.seetv.cc/play/6846/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="TV1" tvg-logo="https://ip-tv.dev/images/ico/tv1bg.png" , TV1
 #EXTGRP:BG
 http://de.seetv.cc/play/6847/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="Дартс ТВ", Дартс ТВ
-#EXTGRP:BG
-http://de.seetv.cc/play/6848/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="България 24 ТВ", България 24 ТВ
 #EXTGRP:BG
 http://de.seetv.cc/play/6849/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="CodeFashion HD" tvg-logo="https://ip-tv.dev/images/ico/codefashion.png" , CodeFashion HD
 #EXTGRP:BG
 http://de.seetv.cc/play/6850/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="Code Healht HD" tvg-logo="https://ip-tv.dev/images/ico/codehealth.png" , Code Healht HD
+#EXTINF:0 tvg-name="Code Health HD" tvg-logo="https://ip-tv.dev/images/ico/codehealth.png" , Code Health HD
 #EXTGRP:BG
 http://de.seetv.cc/play/6851/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="Планета HD BG" tvg-logo="https://ip-tv.dev/images/ico/planetabg.png" , Планета HD BG
+#EXTINF:0 tvg-name="Планета HD" tvg-logo="https://ip-tv.dev/images/ico/planetabg.png" , Планета HD
 #EXTGRP:BG
 http://de.seetv.cc/play/6853/2943F0CF71E9AB1/video.m3u8
-#EXTINF:0 tvg-name="Planeta 4K", Planeta 4K
-#EXTGRP:BG
-http://de.seetv.cc/play/6873/2943F0CF71E9AB1/video.m3u8
 #EXTINF:0 tvg-name="Планета Фолк" tvg-logo="https://ip-tv.dev/images/ico/planetafolk.png" , Планета Фолк
 #EXTGRP:BG
 http://de.seetv.cc/play/6854/2943F0CF71E9AB1/video.m3u8
