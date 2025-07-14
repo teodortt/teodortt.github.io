@@ -1,21 +1,4 @@
-const devicePayload = {
-    appStartupFlowState: "UpdateData",
-    aumLoggedInUserId: 1,
-    batteryLevel: 70,
-    currentPouchId: 2,
-    currentTakingTime: "2024-03-29T12:00:00",
-    drawerState: "Closed",
-    deviceInfoInterval: 11,
-    lidState: "Closed",
-    medicationFlowState: "MedicationPaused",
-    pouchRollInLeftMechanic: 3,
-    pouchRollInRightMechanic: 4,
-    powerSupplyIsOn: true,
-    prepareMedicationFlowState: "SearchForPouch",
-    progressUntilDue: 5.6,
-    remoteCommandInterval: 60,
-    specialCondition: "UnderSupportMaintenance",
-};
+
 
 const navbar = document.getElementById('nav');
 const loginForm = document.getElementById("login-form");
@@ -80,7 +63,7 @@ const devicePayloadOptions = {
         "StartMedicationFlow",
         "RefreshCloudToken",
     ],
-    aumLoggedInUserId: 1,
+    aumLoggedInUserId: 0,
     batteryLevel: 70,
     currentPouchId: 2,
     currentTakingTime: new Date().toISOString(),
@@ -162,6 +145,7 @@ Object.keys(devicePayloadOptions).forEach((key) => {
         if (typeof devicePayloadOptions[key] === "number") {
             input.type = "number";
             input.value = devicePayloadOptions[key];
+            input.min = 0;
         } else if (typeof devicePayloadOptions[key] === "boolean") {
             input.type = "checkbox";
             input.checked = devicePayloadOptions[key];
@@ -191,6 +175,12 @@ async function updateDeviceStatus() {
 
     // Convert boolean inputs back to boolean
     payload.powerSupplyIsOn = form.powerSupplyIsOn.checked;
+
+    // convert aumLoggedInUserId to null if it is 0
+    if (payload.aumLoggedInUserId == 0) {
+        payload.aumLoggedInUserId = null;
+    }
+
 
     try {
         const response = await fetch(
