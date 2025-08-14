@@ -31,9 +31,16 @@
             Username:
             <input id="username" type="text" value="04-00001-23" />
           </label>
-          <label>
-            Password:
-            <input id="password" type="password" value="04-00001-23" />
+          <label for="password"
+            >Password:
+            <span class="password-container">
+              <input id="password" type="password" value="04-00001-23" />
+              <input
+                id="toggle-password"
+                type="checkbox"
+                onclick="document.getElementById('password').type = this.checked ? 'text' : 'password'"
+              />
+            </span>
           </label>
           <button
             id="loginButton"

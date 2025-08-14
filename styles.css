@@ -320,3 +320,16 @@ p.message.error {
 .logout-btn:hover {
   background-position: right bottom;
 }
+
+.password-container {
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+#toggle-password {
+  position: absolute;
+  right: 4px;
+  cursor: pointer;
+}
