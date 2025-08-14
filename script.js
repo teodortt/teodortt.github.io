@@ -2,6 +2,7 @@
 
 const navbar = document.getElementById('nav');
 const loginForm = document.getElementById("login-form");
+const loginButton = document.getElementById("loginButton");
 const appContent = document.getElementById("uploadDeviceStatus");
 const statusMessage = document.getElementById("statusMessage");
 const repeatToggle = document.getElementById('repeatToggle');
@@ -20,6 +21,10 @@ if (accessToken) {
 async function handleLogin() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
+    const messageElement = document.getElementById("loginMessage");
+    messageElement.textContent = "";
+
+    loginButton.disabled = true;
 
     try {
         const response = await fetch(
@@ -45,6 +50,7 @@ async function handleLogin() {
     } catch (error) {
         console.error("Error during login:", error);
         messageElement.textContent = "Login failed. Please try again.";
+        loginButton.disabled = false;
     }
 }
 

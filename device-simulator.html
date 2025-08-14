@@ -35,10 +35,17 @@
             Password:
             <input id="password" type="password" value="04-00001-23" />
           </label>
-          <button style="width: 260px" type="button" onclick="handleLogin()">
+          <button
+            id="loginButton"
+            style="width: 260px"
+            type="button"
+            onclick="handleLogin()"
+          >
             Login
           </button>
         </form>
+
+        <p class="message error" id="loginMessage"></p>
       </div>
 
       <div id="uploadDeviceStatus" style="display: none">
