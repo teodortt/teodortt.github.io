@@ -333,3 +333,7 @@ p.message.error {
   right: 0;
   cursor: pointer;
 }
+
+#remember-me {
+  cursor: pointer;
+}
