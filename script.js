@@ -11,6 +11,13 @@ const submitButton = document.getElementById("submitButton");
 let accessToken = localStorage.getItem("accessToken");
 let intervalRequestId, intervalCounterId;
 
+const storedUsername = localStorage.getItem('username');
+const storedPassword = localStorage.getItem('password');
+if (storedUsername) {
+    document.getElementById('username').value = storedUsername;
+    document.getElementById('password').value = storedPassword;
+}
+
 if (accessToken) {
     appContent.style.display = "block";
     navbar.style.display = "flex";
@@ -331,3 +338,10 @@ repeatToggle.addEventListener('change', () => {
         handleClearInterval();
     }
 });
+
+const handleRememberMe = (checkbox) => {
+    if (checkbox.checked) {
+        localStorage.setItem('username', document.getElementById('username').value);
+        localStorage.setItem('password', document.getElementById('password').value);
+    }
+}
