@@ -307,3 +307,16 @@ p.message.error {
     justify-content: center;
   }
 }
+
+.logout-btn {
+  border-radius: 3px;
+  background: linear-gradient(to right, transparent 50%, #007bff 50%);
+  background-size: 200% 100%;
+  background-position: left bottom;
+  transition: background-position 0.3s ease;
+  padding: 2px;
+}
+
+.logout-btn:hover {
+  background-position: right bottom;
+}
