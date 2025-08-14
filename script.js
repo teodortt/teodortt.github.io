@@ -25,6 +25,7 @@ async function handleLogin() {
     messageElement.textContent = "";
 
     loginButton.disabled = true;
+    loginButton.textContent = "Logging in...";
 
     try {
         const response = await fetch(
@@ -51,6 +52,7 @@ async function handleLogin() {
         console.error("Error during login:", error);
         messageElement.textContent = "Login failed. Please try again.";
         loginButton.disabled = false;
+        loginButton.textContent = "Login";
     }
 }
 
