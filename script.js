@@ -6,6 +6,7 @@ const loginButton = document.getElementById("loginButton");
 const appContent = document.getElementById("uploadDeviceStatus");
 const statusMessage = document.getElementById("statusMessage");
 const repeatToggle = document.getElementById('repeatToggle');
+const rememberMeCheckbox = document.getElementById('remember-me');
 const submitButton = document.getElementById("submitButton");
 
 let accessToken = localStorage.getItem("accessToken");
@@ -51,6 +52,11 @@ async function handleLogin() {
         const data = await response.json();
         localStorage.setItem("accessToken", data.accessToken);
         accessToken = data.accessToken;
+
+        if (rememberMeCheckbox.checked) {
+            localStorage.setItem('username', document.getElementById('username').value);
+            localStorage.setItem('password', document.getElementById('password').value);
+        }
 
         loginForm.style.display = "none";
         appContent.style.display = "block";
@@ -338,10 +344,3 @@ repeatToggle.addEventListener('change', () => {
         handleClearInterval();
     }
 });
-
-const handleRememberMe = (checkbox) => {
-    if (checkbox.checked) {
-        localStorage.setItem('username', document.getElementById('username').value);
-        localStorage.setItem('password', document.getElementById('password').value);
-    }
-}
