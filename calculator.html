@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="bg">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Калкулатор EUR ⇄ BGN</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .calculator {
+        background: white;
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 480px;
+        width: 100%;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .header h1 {
+        color: #2d3748;
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      .header p {
+        color: #718096;
+        font-size: 14px;
+      }
+
+      .exchange-rate {
+        background: #f7fafc;
+        padding: 16px;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 32px;
+        border: 2px solid #e2e8f0;
+      }
+
+      .exchange-rate span {
+        color: #667eea;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      .input-group {
+        margin-bottom: 24px;
+      }
+
+      .input-group label {
+        display: block;
+        color: #4a5568;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .input-wrapper {
+        position: relative;
+      }
+
+      .input-wrapper input {
+        width: 100%;
+        padding: 16px 50px 16px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 20px;
+        transition: all 0.3s;
+        font-weight: 500;
+      }
+
+      .input-wrapper input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .currency-label {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #a0aec0;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .swap-button {
+        display: flex;
+        justify-content: center;
+        margin: -8px 0;
+      }
+
+      .swap-btn {
+        background: white;
+        border: 2px solid #e2e8f0;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .swap-btn:hover {
+        background: #667eea;
+        border-color: #667eea;
+        transform: rotate(180deg) scale(1.1);
+      }
+
+      .swap-btn:hover svg {
+        color: white;
+      }
+
+      .swap-btn svg {
+        width: 24px;
+        height: 24px;
+        color: #667eea;
+        transition: color 0.3s;
+      }
+
+      .result {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 24px;
+        border-radius: 12px;
+        margin-top: 32px;
+        text-align: center;
+      }
+
+      .result p {
+        font-size: 14px;
+        margin-bottom: 8px;
+        opacity: 0.9;
+      }
+
+      .result .amount {
+        font-size: 36px;
+        font-weight: 700;
+      }
+
+      .quick-amounts {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+      }
+
+      .quick-btn {
+        flex: 1;
+        min-width: 70px;
+        padding: 12px;
+        background: #f7fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        color: #4a5568;
+        transition: all 0.2s;
+        font-size: 14px;
+      }
+
+      .quick-btn:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+        transform: translateY(-2px);
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .action-btn {
+        flex: 1;
+        padding: 14px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        background: white;
+        cursor: pointer;
+        font-weight: 600;
+        color: #4a5568;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .action-btn:hover {
+        background: #f7fafc;
+        border-color: #667eea;
+        color: #667eea;
+      }
+
+      .action-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #48bb78;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        display: none;
+        align-items: center;
+        gap: 12px;
+        animation: slideIn 0.3s ease;
+        z-index: 1000;
+      }
+
+      .toast.show {
+        display: flex;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .history {
+        margin-top: 24px;
+        padding: 16px;
+        background: #f7fafc;
+        border-radius: 12px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .history-title {
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .clear-history {
+        font-size: 12px;
+        color: #e53e3e;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: all 0.2s;
+      }
+
+      .clear-history:hover {
+        background: #fff5f5;
+      }
+
+      .history-item {
+        padding: 8px 0;
+        color: #718096;
+        font-size: 14px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .history-item:last-child {
+        border-bottom: none;
+      }
+
+      .history-empty {
+        color: #a0aec0;
+        font-size: 14px;
+        text-align: center;
+        padding: 12px;
+      }
+
+      @media (max-width: 480px) {
+        .calculator {
+          padding: 24px;
+        }
+
+        .header h1 {
+          font-size: 24px;
+        }
+
+        .result .amount {
+          font-size: 28px;
+        }
+
+        .toast {
+          right: 12px;
+          left: 12px;
+          bottom: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <div class="header">
+        <h1>💶 Калкулатор Валута</h1>
+        <p>Официален курс на БНБ</p>
+      </div>
+
+      <div class="exchange-rate">1 EUR = <span>1.95583 BGN</span></div>
+
+      <div class="input-group">
+        <label for="topInput" id="topLabel">Евро</label>
+        <div class="input-wrapper">
+          <input
+            type="number"
+            id="topInput"
+            placeholder="0.00"
+            value="100"
+            step="0.01"
+            min="0"
+          />
+          <span class="currency-label" id="topCurrency">EUR</span>
+        </div>
+      </div>
+
+      <div class="swap-button">
+        <button
+          class="swap-btn"
+          onclick="swapCurrencies()"
+          title="Разменете валутите"
+        >
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="input-group">
+        <label for="bottomInput" id="bottomLabel">Лева</label>
+        <div class="input-wrapper">
+          <input
+            type="number"
+            id="bottomInput"
+            placeholder="0.00"
+            step="0.01"
+            min="0"
+          />
+          <span class="currency-label" id="bottomCurrency">BGN</span>
+        </div>
+      </div>
+
+      <div class="quick-amounts" id="quickAmounts">
+        <button class="quick-btn" onclick="setAmount(10)">10 €</button>
+        <button class="quick-btn" onclick="setAmount(50)">50 €</button>
+        <button class="quick-btn" onclick="setAmount(100)">100 €</button>
+        <button class="quick-btn" onclick="setAmount(500)">500 €</button>
+      </div>
+
+      <div class="actions">
+        <button class="action-btn" onclick="copyResult()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+            ></path>
+          </svg>
+          Копирай
+        </button>
+        <button class="action-btn" onclick="clearInputs()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+          Изчисти
+        </button>
+      </div>
+
+      <div class="result">
+        <p id="resultLabel">Резултат</p>
+        <div class="amount" id="resultAmount">195.58 лв</div>
+      </div>
+
+      <div class="history">
+        <div class="history-title">
+          <span>📊 История</span>
+          <span class="clear-history" onclick="clearHistory()">Изчисти</span>
+        </div>
+        <div id="historyList">
+          <div class="history-empty">Все още няма изчисления</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">
+      <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fill-rule="evenodd"
+          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      <span id="toastMessage">Копирано!</span>
+    </div>
+
+    <script>
+      const EXCHANGE_RATE = 1.95583;
+      let isEuroToLev = true;
+      let history = JSON.parse(localStorage.getItem("conversionHistory")) || [];
+
+      const topInput = document.getElementById("topInput");
+      const bottomInput = document.getElementById("bottomInput");
+      const resultAmount = document.getElementById("resultAmount");
+      const topLabel = document.getElementById("topLabel");
+      const bottomLabel = document.getElementById("bottomLabel");
+      const topCurrency = document.getElementById("topCurrency");
+      const bottomCurrency = document.getElementById("bottomCurrency");
+      const resultLabel = document.getElementById("resultLabel");
+      const quickAmounts = document.getElementById("quickAmounts");
+
+      function convert() {
+        if (isEuroToLev) {
+          const euroValue = parseFloat(topInput.value) || 0;
+          const levValue = (euroValue * EXCHANGE_RATE).toFixed(2);
+          bottomInput.value = levValue;
+          resultAmount.textContent = `${levValue} лв`;
+          if (euroValue > 0) {
+            addToHistory(`${euroValue} EUR → ${levValue} BGN`);
+          }
+        } else {
+          const levValue = parseFloat(topInput.value) || 0;
+          const euroValue = (levValue / EXCHANGE_RATE).toFixed(2);
+          bottomInput.value = euroValue;
+          resultAmount.textContent = `${euroValue} €`;
+          if (levValue > 0) {
+            addToHistory(`${levValue} BGN → ${euroValue} EUR`);
+          }
+        }
+      }
+
+      function convertReverse() {
+        if (isEuroToLev) {
+          const levValue = parseFloat(bottomInput.value) || 0;
+          const euroValue = (levValue / EXCHANGE_RATE).toFixed(2);
+          topInput.value = euroValue;
+          resultAmount.textContent = `${levValue} лв`;
+        } else {
+          const euroValue = parseFloat(bottomInput.value) || 0;
+          const levValue = (euroValue * EXCHANGE_RATE).toFixed(2);
+          topInput.value = levValue;
+          resultAmount.textContent = `${euroValue} €`;
+        }
+      }
+
+      function swapCurrencies() {
+        isEuroToLev = !isEuroToLev;
+
+        if (isEuroToLev) {
+          topLabel.textContent = "Евро";
+          bottomLabel.textContent = "Лева";
+          topCurrency.textContent = "EUR";
+          bottomCurrency.textContent = "BGN";
+          resultLabel.textContent = "Резултат в лева";
+          updateQuickButtons(["10 €", "50 €", "100 €", "500 €"]);
+        } else {
+          topLabel.textContent = "Лева";
+          bottomLabel.textContent = "Евро";
+          topCurrency.textContent = "BGN";
+          bottomCurrency.textContent = "EUR";
+          resultLabel.textContent = "Резултат в евро";
+          updateQuickButtons(["20 лв", "100 лв", "200 лв", "1000 лв"]);
+        }
+
+        // Swap values
+        const temp = topInput.value;
+        topInput.value = bottomInput.value;
+        bottomInput.value = temp;
+
+        convert();
+      }
+
+      function updateQuickButtons(labels) {
+        const amounts = isEuroToLev ? [10, 50, 100, 500] : [20, 100, 200, 1000];
+        quickAmounts.innerHTML = amounts
+          .map(
+            (amount, i) =>
+              `<button class="quick-btn" onclick="setAmount(${amount})">${labels[i]}</button>`
+          )
+          .join("");
+      }
+
+      function setAmount(amount) {
+        topInput.value = amount;
+        convert();
+      }
+
+      function copyResult() {
+        const text = resultAmount.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("Резултатът е копиран!");
+        });
+      }
+
+      function clearInputs() {
+        topInput.value = "";
+        bottomInput.value = "";
+        resultAmount.textContent = isEuroToLev ? "0.00 лв" : "0.00 €";
+      }
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toastMessage");
+        toastMessage.textContent = message;
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
+
+      function addToHistory(conversion) {
+        const now = new Date();
+        const time = now.toLocaleTimeString("bg-BG", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        history.unshift({ conversion, time });
+
+        if (history.length > 10) {
+          history = history.slice(0, 10);
+        }
+
+        localStorage.setItem("conversionHistory", JSON.stringify(history));
+        renderHistory();
+      }
+
+      function renderHistory() {
+        const historyList = document.getElementById("historyList");
+
+        if (history.length === 0) {
+          historyList.innerHTML =
+            '<div class="history-empty">Все още няма изчисления</div>';
+          return;
+        }
+
+        historyList.innerHTML = history
+          .map(
+            (item) =>
+              `<div class="history-item">${item.time} - ${item.conversion}</div>`
+          )
+          .join("");
+      }
+
+      function clearHistory() {
+        history = [];
+        localStorage.removeItem("conversionHistory");
+        renderHistory();
+        showToast("Историята е изчистена");
+      }
+
+      topInput.addEventListener("input", convert);
+      bottomInput.addEventListener("input", convertReverse);
+
+      // Initial setup
+      convert();
+      renderHistory();
+    </script>
+  </body>
+</html>
