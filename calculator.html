@@ -3,260 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#4c1d95" id="themeColor">
+    <meta name="theme-color" content="#4f46e5" id="themeColor">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>EUR/BGN Smart Calc</title>
+    <title>BG Euro Hub</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            --card-bg: #ffffff;
             --text-main: #1f2937;
             --text-sec: #6b7280;
             --accent: #4f46e5;
-            --accent-hover: #4338ca;
+            --accent-soft: #eef2ff;
             --border: #e5e7eb;
-            --input-bg: #ffffff;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="dark"] {
             --bg-gradient: linear-gradient(135deg, #111827 0%, #1f2937 100%);
-            --card-bg: rgba(31, 41, 55, 0.95);
-            --text-main: #f3f4f6;
+            --card-bg: #1f2937;
+            --text-main: #f9fafb;
             --text-sec: #9ca3af;
             --accent: #818cf8;
-            --accent-hover: #6366f1;
+            --accent-soft: #312e81;
             --border: #374151;
-            --input-bg: #111827;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg-gradient);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: 16px;
-            transition: background 0.3s ease;
+            color: var(--text-main);
         }
 
-        .app-container {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 24px;
+        .container {
             width: 100%;
-            max-width: 440px;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 20px;
             box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            position: relative;
-            transition: all 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh; /* Mobile app feel */
+            max-height: 800px;
         }
 
-        /* Top Bar */
-        .top-bar {
+        /* Header & Tabs */
+        .header {
+            padding: 20px 20px 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
         }
 
-        .logo {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--text-main);
+        .title { font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; gap: 8px; }
+        
+        .theme-btn {
+            background: none; border: none; cursor: pointer; color: var(--text-main);
+            padding: 8px; border-radius: 50%; background: var(--border);
+        }
+
+        .tabs {
             display: flex;
-            align-items: center;
+            padding: 0 16px;
             gap: 8px;
+            margin-bottom: 16px;
         }
 
-        .theme-toggle {
-            background: none;
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
             border: none;
-            color: var(--text-main);
+            background: transparent;
+            color: var(--text-sec);
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            background: var(--input-bg);
-            border: 1px solid var(--border);
+            transition: all 0.2s;
         }
 
-        /* Rate Display */
-        .rate-badge {
-            background: var(--accent);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 20px;
-            opacity: 0.9;
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            background: var(--accent-soft);
+            border-radius: 8px 8px 0 0;
         }
+
+        /* Scrollable Content */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px 20px;
+            display: none; /* Hidden by default */
+        }
+        
+        .content-area.active { display: block; animation: fadeIn 0.3s ease; }
 
         /* Inputs */
-        .input-group {
+        .input-wrapper {
             position: relative;
             margin-bottom: 16px;
         }
 
-        .input-label {
-            position: absolute;
-            left: 16px;
-            top: 10px;
-            font-size: 12px;
+        .label {
+            font-size: 0.85rem;
             color: var(--text-sec);
+            margin-bottom: 6px;
+            display: block;
             font-weight: 500;
         }
 
-        .currency-input {
+        .input-field {
             width: 100%;
-            background: var(--input-bg);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 28px 16px 10px;
-            font-size: 24px;
+            padding: 16px;
+            font-size: 1.25rem;
+            background: var(--bg-gradient);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             color: var(--text-main);
             font-weight: 700;
             outline: none;
-            transition: all 0.2s;
-            /* Fix iOS Zoom */
-            font-size: 20px; 
         }
 
-        .currency-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
-        }
-
-        .currency-tag {
+        .input-field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); }
+        
+        .currency-badge {
             position: absolute;
             right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 42px;
             font-weight: 700;
             color: var(--text-sec);
         }
 
-        /* Swap Button */
-        .swap-container {
-            height: 20px;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .swap-btn {
-            background: var(--accent);
-            color: white;
-            border: 4px solid var(--card-bg);
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .swap-btn:active { transform: scale(0.9); }
-
-        /* VAT Toggle */
-        .dds-control {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 20px 0;
-            padding: 12px;
-            background: var(--input-bg);
+        /* Sections */
+        .card-section {
+            background: var(--bg-gradient);
+            padding: 16px;
             border-radius: 12px;
+            margin-top: 20px;
             border: 1px solid var(--border);
         }
 
-        .dds-label {
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 14px;
+        /* History */
+        .history-list {
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
         }
 
-        /* iOS Style Switch */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 48px;
-            height: 26px;
-        }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--border);
-            transition: .4s;
-            border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        /* Result Breakdown */
-        .breakdown {
-            background: var(--input-bg);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 20px;
-            display: none;
-            border: 1px dashed var(--border);
-        }
-        
-        .breakdown.visible { display: block; animation: slideDown 0.3s ease; }
-
-        .breakdown-row {
+        .history-item {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
-            color: var(--text-sec);
-            margin-bottom: 8px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .history-item:last-child { border: none; }
+        .history-time { color: var(--text-sec); font-size: 0.8rem; }
+
+        /* Payment Mode Styles */
+        .payment-summary {
+            text-align: center;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 20px;
+            background: var(--text-main); /* Inverted */
+            color: var(--card-bg);
         }
         
-        .breakdown-row.total {
-            color: var(--text-main);
+        .change-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 700;
-            font-size: 16px;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-            margin-bottom: 0;
+            text-transform: uppercase;
         }
+        .status-ok { background: var(--success); color: white; }
+        .status-warn { background: var(--danger); color: white; }
 
-        /* Action Buttons Grid */
-        .actions-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
+        /* Buttons */
+        .btn-row { display: flex; gap: 10px; margin-top: 20px; }
+        
         .btn {
+            flex: 1;
             padding: 14px;
             border-radius: 12px;
             border: none;
@@ -265,228 +210,299 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            font-size: 14px;
-            transition: opacity 0.2s;
+            gap: 6px;
         }
-
-        .btn:active { opacity: 0.7; }
-
+        
         .btn-primary { background: var(--accent); color: white; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
+        .btn-outline { border: 1px solid var(--border); background: transparent; color: var(--text-main); }
+        .btn-clear { color: var(--danger); font-size: 0.8rem; float: right; cursor: pointer; }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* Utility */
+        .swap-container { display: flex; justify-content: center; margin: -10px 0 10px; position: relative; z-index: 5; }
+        .swap-btn { background: var(--accent); color: white; width: 40px; height: 40px; border-radius: 50%; border: 4px solid var(--card-bg); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="top-bar">
-        <div class="logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-            BG Converter
+<div class="container">
+    <div class="header">
+        <div class="title">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
+            BG Euro Hub
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Смяна на тема">
-            <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <button class="theme-btn" onclick="toggleTheme()">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
     </div>
 
-    <div style="text-align: center;">
-        <div class="rate-badge">Фиксиран курс: 1.95583</div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('converter')">Конвертор</button>
+        <button class="tab-btn" onclick="switchTab('payment')">Каса / Ресто</button>
     </div>
 
-    <div class="input-group">
-        <label class="input-label" id="labelTop">Евро (без ДДС)</label>
-        <!-- inputmode="decimal" вика цифровата клавиатура на iOS/Android -->
-        <input type="number" class="currency-input" id="inputTop" value="100" placeholder="0" inputmode="decimal">
-        <span class="currency-tag" id="currencyTop">EUR</span>
-    </div>
-
-    <div class="swap-container">
-        <button class="swap-btn" onclick="swapCurrency()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16"/></svg>
-        </button>
-    </div>
-
-    <div class="input-group" style="margin-top: -10px;">
-        <label class="input-label" id="labelBottom">Лева (без ДДС)</label>
-        <input type="number" class="currency-input" id="inputBottom" placeholder="0" inputmode="decimal">
-        <span class="currency-tag" id="currencyBottom">BGN</span>
-    </div>
-
-    <div class="dds-control">
-        <span class="dds-label">Начисли ДДС (20%)</span>
-        <label class="switch">
-            <input type="checkbox" id="vatToggle" onchange="calculate()">
-            <span class="slider"></span>
-        </label>
-    </div>
-
-    <div id="breakdown" class="breakdown">
-        <div class="breakdown-row">
-            <span>Основа:</span>
-            <span id="valBase">0.00</span>
+    <!-- TAB 1: CONVERTER -->
+    <div id="converter" class="content-area active">
+        
+        <div class="input-wrapper">
+            <label class="label" id="lblTop">Сума в Евро</label>
+            <input type="number" id="inpTop" class="input-field" placeholder="0" inputmode="decimal" value="100">
+            <span class="currency-badge" id="curTop">EUR</span>
         </div>
-        <div class="breakdown-row">
-            <span>ДДС (20%):</span>
-            <span id="valVat">0.00</span>
+
+        <div class="swap-container">
+            <div class="swap-btn" onclick="swapConverter()">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 16V4M7 4L3 8M7 4L11 8M17 8V20M17 20L21 16M17 20L13 16"/></svg>
+            </div>
         </div>
-        <div class="breakdown-row total">
-            <span>ТОТАЛ:</span>
-            <span id="valTotal">0.00</span>
+
+        <div class="input-wrapper">
+            <label class="label" id="lblBottom">Сума в Лева</label>
+            <input type="number" id="inpBottom" class="input-field" placeholder="0" inputmode="decimal" readonly>
+            <span class="currency-badge" id="curBottom">BGN</span>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn btn-outline" onclick="copyResult()">Копирай</button>
+            <button class="btn btn-primary" onclick="saveToHistory()">Запази</button>
+        </div>
+
+        <!-- History Section -->
+        <div class="card-section">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span class="label" style="margin:0;">📜 История</span>
+                <span class="btn-clear" onclick="clearHistory()">Изчисти</span>
+            </div>
+            <div id="historyList" class="history-list">
+                <!-- History items injected here -->
+                <div style="text-align:center; color:var(--text-sec); padding:10px; font-size:0.9rem;">Няма скорошни записи</div>
+            </div>
         </div>
     </div>
 
-    <div class="actions-grid">
-        <button class="btn btn-outline" onclick="copyResult()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Копирай
-        </button>
-        <button class="btn btn-primary" onclick="shareResult()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-            Сподели
-        </button>
+    <!-- TAB 2: MIXED PAYMENT -->
+    <div id="payment" class="content-area">
+        <div class="input-wrapper">
+            <label class="label">Дължима сума (Сметка)</label>
+            <input type="number" id="billAmount" class="input-field" placeholder="0.00" inputmode="decimal">
+            <span class="currency-badge">BGN</span>
+        </div>
+
+        <div style="display:flex; gap:10px;">
+            <div class="input-wrapper" style="flex:1;">
+                <label class="label">Дават (EUR)</label>
+                <input type="number" id="payEur" class="input-field" placeholder="0" inputmode="decimal">
+            </div>
+            <div class="input-wrapper" style="flex:1;">
+                <label class="label">Дават (BGN)</label>
+                <input type="number" id="payBgn" class="input-field" placeholder="0" inputmode="decimal">
+            </div>
+        </div>
+
+        <div class="payment-summary" id="paymentResult">
+            <div id="paymentStatus" class="status-badge status-warn">Чака въвеждане</div>
+            <div style="margin-top:10px; font-size:0.9rem; opacity:0.8;">Ресто за връщане:</div>
+            <div class="change-amount" id="changeBgn">0.00 <span style="font-size:1rem">лв</span></div>
+            <div style="font-size:0.9rem;">≈ <span id="changeEur">0.00</span> €</div>
+        </div>
+        
+        <div class="btn-row">
+             <button class="btn btn-outline" onclick="resetPayment()">Нова сметка</button>
+        </div>
     </div>
+
 </div>
 
 <script>
     const RATE = 1.95583;
     let isEurToBgn = true;
     
-    // DOM Elements
-    const inputTop = document.getElementById('inputTop');
-    const inputBottom = document.getElementById('inputBottom');
-    const currencyTop = document.getElementById('currencyTop');
-    const currencyBottom = document.getElementById('currencyBottom');
-    const labelTop = document.getElementById('labelTop');
-    const labelBottom = document.getElementById('labelBottom');
-    const vatToggle = document.getElementById('vatToggle');
-    const breakdown = document.getElementById('breakdown');
-
-    // Theme Logic
-    function initTheme() {
-        // Check system preference or saved preference
+    // --- THEME & INIT ---
+    function init() {
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.setAttribute('data-theme', 'dark');
             document.getElementById('themeColor').setAttribute('content', '#111827');
         }
+        renderHistory();
+        // Trigger default calculation
+        calcConverter();
     }
-    initTheme();
 
     function toggleTheme() {
-        const current = document.documentElement.getAttribute('data-theme');
-        const target = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', target);
-        localStorage.theme = target;
-        
-        // Update browser chrome color for mobile
-        document.getElementById('themeColor').setAttribute('content', target === 'dark' ? '#111827' : '#4c1d95');
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const newTheme = isDark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.theme = newTheme;
+        document.getElementById('themeColor').setAttribute('content', newTheme === 'dark' ? '#111827' : '#4f46e5');
     }
 
-    // Calculation Logic
-    function formatMoney(num, currency) {
-        return new Intl.NumberFormat('bg-BG', { style: 'currency', currency: currency }).format(num);
+    function switchTab(tabId) {
+        document.querySelectorAll('.content-area').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        // Find button by onclick attribute (simple hack)
+        const btns = document.querySelectorAll('.tab-btn');
+        if(tabId === 'converter') btns[0].classList.add('active');
+        else btns[1].classList.add('active');
     }
 
-    function calculate(source = 'top') {
-        const hasVat = vatToggle.checked;
-        breakdown.classList.toggle('visible', hasVat);
-        
-        let valTop = parseFloat(inputTop.value);
-        let valBottom = parseFloat(inputBottom.value);
+    // --- CONVERTER LOGIC ---
+    const inpTop = document.getElementById('inpTop');
+    const inpBottom = document.getElementById('inpBottom');
 
-        if (isNaN(valTop) && source === 'top') { inputBottom.value = ''; updateBreakdown(0); return; }
-        if (isNaN(valBottom) && source === 'bottom') { inputTop.value = ''; updateBreakdown(0); return; }
-
-        if (source === 'top') {
-            // Forward Calculation
-            let result = isEurToBgn ? valTop * RATE : valTop / RATE;
-            inputBottom.value = result.toFixed(2);
-            updateBreakdown(isEurToBgn ? result : valTop, isEurToBgn ? 'BGN' : 'EUR');
-        } else {
-            // Reverse Calculation
-            let result = isEurToBgn ? valBottom / RATE : valBottom * RATE;
-            inputTop.value = result.toFixed(2);
-            updateBreakdown(isEurToBgn ? valBottom : result, isEurToBgn ? 'BGN' : 'EUR');
+    function calcConverter() {
+        const val = parseFloat(inpTop.value);
+        if (isNaN(val)) {
+            inpBottom.value = '';
+            return;
         }
+        const res = isEurToBgn ? val * RATE : val / RATE;
+        inpBottom.value = res.toFixed(2);
     }
 
-    function updateBreakdown(baseAmount, currency) {
-        if (!vatToggle.checked) return;
-        
-        const vat = baseAmount * 0.20;
-        const total = baseAmount + vat;
-        
-        document.getElementById('valBase').textContent = formatMoney(baseAmount, currency);
-        document.getElementById('valVat').textContent = formatMoney(vat, currency);
-        document.getElementById('valTotal').textContent = formatMoney(total, currency);
-    }
-
-    function swapCurrency() {
+    function swapConverter() {
         isEurToBgn = !isEurToBgn;
         
-        // Swap visual labels
-        const tempCurr = currencyTop.textContent;
-        currencyTop.textContent = currencyBottom.textContent;
-        currencyBottom.textContent = tempCurr;
+        // Swap UI Labels
+        document.getElementById('lblTop').innerText = isEurToBgn ? 'Сума в Евро' : 'Сума в Лева';
+        document.getElementById('lblBottom').innerText = isEurToBgn ? 'Сума в Лева' : 'Сума в Евро';
+        document.getElementById('curTop').innerText = isEurToBgn ? 'EUR' : 'BGN';
+        document.getElementById('curBottom').innerText = isEurToBgn ? 'BGN' : 'EUR';
 
-        labelTop.textContent = isEurToBgn ? "Евро (без ДДС)" : "Лева (без ДДС)";
-        labelBottom.textContent = isEurToBgn ? "Лева (без ДДС)" : "Евро (без ДДС)";
-
-        // Swap values
-        const tempVal = inputTop.value;
-        inputTop.value = inputBottom.value;
-        inputBottom.value = tempVal;
-        
-        calculate('top');
+        // Swap Values
+        const oldTop = inpTop.value;
+        inpTop.value = inpBottom.value;
+        calcConverter(); // Recalculate based on new top
     }
 
-    // Share & Copy
-    async function shareResult() {
-        const topVal = inputTop.value;
-        const botVal = inputBottom.value;
-        const topCur = currencyTop.textContent;
-        const botCur = currencyBottom.textContent;
-        const text = `${topVal} ${topCur} = ${botVal} ${botCur} (по курс на БНБ)`;
+    inpTop.addEventListener('input', calcConverter);
 
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: 'Валутен калкулатор',
-                    text: text,
-                    url: window.location.href
-                });
-            } catch (err) {
-                console.log('Share canceled');
-            }
-        } else {
-            copyResult();
-            alert('Споделянето не се поддържа от този браузър. Резултатът е копиран!');
+    // --- HISTORY LOGIC ---
+    function getHistory() {
+        return JSON.parse(localStorage.getItem('calcHistory') || '[]');
+    }
+
+    function saveToHistory() {
+        const val1 = inpTop.value;
+        const cur1 = document.getElementById('curTop').innerText;
+        const val2 = inpBottom.value;
+        const cur2 = document.getElementById('curBottom').innerText;
+
+        if(!val1 || !val2) return;
+
+        const history = getHistory();
+        const entry = {
+            txt: `${val1} ${cur1} ➝ ${val2} ${cur2}`,
+            time: new Date().toLocaleTimeString('bg-BG', {hour: '2-digit', minute:'2-digit'})
+        };
+
+        // Prevent duplicates at top
+        if(history.length > 0 && history[0].txt === entry.txt) return;
+
+        history.unshift(entry);
+        if(history.length > 10) history.pop(); // Keep last 10
+        
+        localStorage.setItem('calcHistory', JSON.stringify(history));
+        renderHistory();
+        
+        // Visual feedback
+        const btn = document.querySelector('.btn-primary');
+        const oldText = btn.innerText;
+        btn.innerText = "Запазено!";
+        setTimeout(() => btn.innerText = oldText, 1000);
+    }
+
+    function renderHistory() {
+        const list = document.getElementById('historyList');
+        const history = getHistory();
+        
+        if (history.length === 0) {
+            list.innerHTML = '<div style="text-align:center; color:var(--text-sec); padding:10px; font-size:0.9rem;">Няма скорошни записи</div>';
+            return;
         }
+
+        list.innerHTML = history.map(h => `
+            <div class="history-item">
+                <span>${h.txt}</span>
+                <span class="history-time">${h.time}</span>
+            </div>
+        `).join('');
+    }
+
+    function clearHistory() {
+        localStorage.removeItem('calcHistory');
+        renderHistory();
     }
 
     function copyResult() {
-        const botVal = inputBottom.value;
-        const botCur = currencyBottom.textContent;
-        navigator.clipboard.writeText(`${botVal} ${botCur}`);
-        
-        // Simple visual feedback
-        const btn = document.querySelector('.btn-outline');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = "Копирано! ✓";
-        setTimeout(() => btn.innerHTML = originalText, 2000);
+        const txt = `${inpBottom.value} ${document.getElementById('curBottom').innerText}`;
+        navigator.clipboard.writeText(txt);
+        alert('Копирано: ' + txt);
     }
 
-    // Event Listeners
-    inputTop.addEventListener('input', () => calculate('top'));
-    inputBottom.addEventListener('input', () => calculate('bottom'));
+    // --- MIXED PAYMENT LOGIC ---
+    const billInput = document.getElementById('billAmount');
+    const payEurInput = document.getElementById('payEur');
+    const payBgnInput = document.getElementById('payBgn');
     
-    // Initial Calc
-    calculate('top');
+    function calcPayment() {
+        const bill = parseFloat(billInput.value) || 0;
+        const givenEur = parseFloat(payEurInput.value) || 0;
+        const givenBgn = parseFloat(payBgnInput.value) || 0;
+
+        if (bill === 0 && givenEur === 0 && givenBgn === 0) return;
+
+        // Convert everything the customer gave to BGN base
+        const totalGivenInBgn = givenBgn + (givenEur * RATE);
+        const difference = totalGivenInBgn - bill;
+
+        const statusEl = document.getElementById('paymentStatus');
+        const changeBgnEl = document.getElementById('changeBgn');
+        const changeEurEl = document.getElementById('changeEur');
+        const resultBox = document.getElementById('paymentResult');
+
+        if (difference >= -0.009) { // Handle float precision, basically >= 0
+            // Success: Give Change
+            statusEl.innerText = "РЕСТО";
+            statusEl.className = "status-badge status-ok";
+            resultBox.style.background = "var(--text-main)";
+            
+            changeBgnEl.innerText = difference.toFixed(2) + " лв";
+            changeEurEl.innerText = (difference / RATE).toFixed(2);
+        } else {
+            // Insufficient funds
+            const remaining = Math.abs(difference);
+            statusEl.innerText = "ОСТАВАТ ДА СЕ ПЛАТЯТ";
+            statusEl.className = "status-badge status-warn";
+            resultBox.style.background = "#fee2e2"; // Light red alert
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                resultBox.style.background = "#7f1d1d"; 
+            }
+
+            changeBgnEl.innerText = remaining.toFixed(2) + " лв";
+            changeEurEl.innerText = (remaining / RATE).toFixed(2);
+        }
+    }
+
+    function resetPayment() {
+        billInput.value = '';
+        payEurInput.value = '';
+        payBgnInput.value = '';
+        document.getElementById('changeBgn').innerText = '0.00 лв';
+        document.getElementById('changeEur').innerText = '0.00';
+        document.getElementById('paymentStatus').innerText = 'Чака въвеждане';
+        document.getElementById('paymentStatus').className = "status-badge status-warn";
+        document.getElementById('paymentResult').style.background = "var(--text-main)";
+    }
+
+    [billInput, payEurInput, payBgnInput].forEach(el => el.addEventListener('input', calcPayment));
+
+    // Start
+    init();
 
 </script>
 </body>
 </html>
+
