@@ -9,10 +9,10 @@
       content="Открийте перфектното 3D принтиране с 3DPrintPro. Висококачествен FDM и SLA печат, 3D моделиране и прототипиране. Светкавична изработка."
     />
 
-    <!-- 1. LCP Оптимизация: Казваме на браузъра да свали главната снимка веднага -->
+    <!-- LCP Оптимизация -->
     <link rel="preload" as="image" href="./3d1.avif" />
 
-    <!-- 2. Неблокиращи икони: Зареждат се във фонов режим, за да не спират текста -->
+    <!-- Неблокиращи икони -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -25,12 +25,11 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     /></noscript>
 
-    <!-- 3. AOS Анимации -->
+    <!-- AOS Анимации -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <!-- 4. Чист, светкавично бърз CSS -->
+    <!-- Чист, бърз и ДОСТЪПЕН CSS -->
     <style>
-      /* Системни променливи (Цветове) */
       :root {
         --brand: #3b82f6;
         --brand-dark: #2563eb;
@@ -38,12 +37,12 @@
         --accent: #f97316;
         --accent-dark: #ea580c;
         --text-main: #334155;
-        --text-light: #64748b;
+        /* Леко потъмнено за по-силен контраст върху бял фон (WCAG AA) */
+        --text-light: #475569;
         --bg-light: #f8fafc;
         --bg-gray: #f1f5f9;
       }
 
-      /* Базови стилове за 100% скорост */
       *,
       *::before,
       *::after {
@@ -51,6 +50,7 @@
         margin: 0;
         padding: 0;
       }
+
       html {
         scroll-behavior: smooth;
         font-family:
@@ -61,18 +61,19 @@
           Roboto,
           sans-serif;
       }
+
       body {
         background-color: var(--bg-light);
         color: var(--text-main);
         line-height: 1.6;
         overflow-x: hidden;
       }
+
       a {
         text-decoration: none;
         color: inherit;
       }
 
-      /* Типография */
       h1,
       h2,
       h3,
@@ -81,12 +82,14 @@
         line-height: 1.2;
         font-weight: 800;
       }
+
       .section-title {
         font-size: clamp(2rem, 4vw, 2.5rem);
         text-align: center;
         margin-bottom: 0.5rem;
         letter-spacing: -0.02em;
       }
+
       .title-underline {
         width: 80px;
         height: 4px;
@@ -94,23 +97,26 @@
         margin: 0 auto 3rem auto;
         border-radius: 2px;
       }
+
       .title-underline.accent {
         background: var(--accent);
       }
 
-      /* Оформление (Layout) */
       .container {
         max-width: 1200px;
         margin: 0 auto;
         padding: 0 1.5rem;
       }
+
       .py-section {
         padding: 6rem 0;
       }
+
       .grid {
         display: grid;
         gap: 2rem;
       }
+
       @media (min-width: 768px) {
         .grid-2 {
           grid-template-columns: repeat(2, 1fr);
@@ -123,7 +129,6 @@
         }
       }
 
-      /* Бутони */
       .btn {
         display: inline-flex;
         align-items: center;
@@ -165,7 +170,6 @@
         transform: translateY(-3px);
       }
 
-      /* Навигация */
       .navbar {
         position: fixed;
         top: 0;
@@ -194,11 +198,14 @@
         gap: 2.5rem;
         align-items: center;
       }
+
+      /* Добавен padding за по-добра достъпност при докосване (Tap Target) */
       .nav-item {
         color: #cbd5e1;
         font-weight: 500;
         position: relative;
         transition: color 0.3s;
+        padding: 0.5rem 0;
       }
       .nav-item:hover {
         color: white;
@@ -206,7 +213,7 @@
       .nav-item::after {
         content: "";
         position: absolute;
-        bottom: -5px;
+        bottom: 0;
         left: 0;
         width: 0;
         height: 2px;
@@ -220,9 +227,8 @@
         .nav-links {
           display: none;
         }
-      } /* Скрито меню за мобилни за простота тук */
+      }
 
-      /* Hero секция с оптимизиран паралакс */
       .hero {
         position: relative;
         height: 100vh;
@@ -234,9 +240,8 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        background-attachment: fixed; /* Паралакс само за десктоп */
+        background-attachment: fixed;
       }
-      /* Оправяме насичането (Scroll Jank) на мобилни телефони */
       @media (max-width: 768px) {
         .hero {
           background-attachment: scroll;
@@ -276,7 +281,6 @@
         flex-wrap: wrap;
       }
 
-      /* Услуги - Карти */
       .card {
         background: white;
         padding: 2.5rem;
@@ -311,7 +315,6 @@
         color: var(--text-light);
       }
 
-      /* Галерия (Оправено отместване на екрана - CLS) */
       .portfolio {
         background: white;
       }
@@ -330,7 +333,6 @@
         transform: scale(1.05) rotate(-1deg);
       }
 
-      /* Ценоразпис */
       .pricing {
         background: var(--bg-gray);
       }
@@ -341,7 +343,8 @@
         border: 4px solid var(--brand);
         position: relative;
       }
-      .price-card h4 {
+      /* Променено от h4 на h3 за правилна йерархия (Accessibility) */
+      .price-card h3 {
         font-size: 1.8rem;
         margin-bottom: 0.2rem;
       }
@@ -377,7 +380,6 @@
         font-size: 1.2rem;
       }
 
-      /* Контакти и Футър */
       .contact {
         background: var(--dark);
         color: white;
@@ -397,25 +399,26 @@
         margin-left: auto;
         margin-right: auto;
       }
+
+      /* Оправен контраст за футъра - светло сиво върху черно */
       footer {
         background: black;
-        color: var(--text-light);
+        color: #94a3b8;
         text-align: center;
-        padding: 2rem 0;
+        padding: 2.5rem 0;
         border-top: 1px solid #1e293b;
       }
     </style>
   </head>
   <body>
     <!-- Навигация -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Основна навигация">
       <div class="container nav-content">
-        <a href="#" class="logo">3DPrint<span>Pro</span></a>
+        <a href="#" class="logo" aria-label="Начало">3DPrint<span>Pro</span></a>
         <div class="nav-links">
           <a href="#services" class="nav-item">Услуги</a>
           <a href="#portfolio" class="nav-item">Галерия</a>
           <a href="#pricing" class="nav-item">Цени</a>
-          <!-- Бутон в навигацията с вграден клас за бързина -->
           <a
             href="#contact"
             style="
@@ -448,169 +451,213 @@
       </div>
     </header>
 
-    <!-- Услуги -->
-    <section id="services" class="py-section">
-      <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Какво създаваме?</h2>
-        <div class="title-underline" data-aos="fade-up"></div>
+    <!-- MAIN таг за Screen Readers (Accessibility Landmark) -->
+    <main>
+      <!-- Услуги -->
+      <section id="services" class="py-section">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Какво създаваме?</h2>
+          <div class="title-underline" data-aos="fade-up"></div>
 
-        <div class="grid grid-3">
-          <div class="card" data-aos="fade-up" data-aos-delay="100">
-            <div class="card-icon"><i class="fas fa-layer-group"></i></div>
-            <h3>FDM Принтиране</h3>
-            <p>
-              Идеално за издръжливи прототипи, функционални детайли и кутии.
-              Широка гама от материали (PLA, PETG, ABS).
-            </p>
-          </div>
-          <div class="card" data-aos="fade-up" data-aos-delay="200">
-            <div class="card-icon"><i class="fas fa-flask"></i></div>
-            <h3>SLA Принтиране</h3>
-            <p>
-              Перфектно за фигурки, бижута и детайли, изискващи изключително
-              фина повърхност и висока точност.
-            </p>
-          </div>
-          <div class="card" data-aos="fade-up" data-aos-delay="300">
-            <div class="card-icon"><i class="fas fa-cube"></i></div>
-            <h3>3D Моделиране</h3>
-            <p>
-              Нашите инженери ще превърнат вашата идея, скица или физическа част
-              в дигитален 3D модел, готов за производство.
-            </p>
+          <div class="grid grid-3">
+            <div class="card" data-aos="fade-up" data-aos-delay="100">
+              <div class="card-icon">
+                <i class="fas fa-layer-group" aria-hidden="true"></i>
+              </div>
+              <h3>FDM Принтиране</h3>
+              <p>
+                Идеално за издръжливи прототипи, функционални детайли и кутии.
+                Широка гама от материали (PLA, PETG, ABS).
+              </p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="200">
+              <div class="card-icon">
+                <i class="fas fa-flask" aria-hidden="true"></i>
+              </div>
+              <h3>SLA Принтиране</h3>
+              <p>
+                Перфектно за фигурки, бижута и детайли, изискващи изключително
+                фина повърхност и висока точност.
+              </p>
+            </div>
+            <div class="card" data-aos="fade-up" data-aos-delay="300">
+              <div class="card-icon">
+                <i class="fas fa-cube" aria-hidden="true"></i>
+              </div>
+              <h3>3D Моделиране</h3>
+              <p>
+                Нашите инженери ще превърнат вашата идея, скица или физическа
+                част в дигитален 3D модел, готов за производство.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Портфолио (С добавени width/height/lazy loading за 100% PageSpeed) -->
-    <section id="portfolio" class="py-section portfolio">
-      <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Галерия</h2>
-        <div class="title-underline" data-aos="fade-up"></div>
+      <!-- Портфолио -->
+      <section id="portfolio" class="py-section portfolio">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Галерия</h2>
+          <div class="title-underline" data-aos="fade-up"></div>
 
-        <div class="grid grid-4">
-          <!-- Замени URL-ите с твои снимки -->
-          <div data-aos="zoom-in" data-aos-delay="100">
-            <img
-              src="./3d1.avif"
-              alt="FDM Част"
-              width="400"
-              height="300"
-              loading="lazy"
-              decoding="async"
-              class="gallery-img"
-            />
-          </div>
-          <div data-aos="zoom-in" data-aos-delay="200">
-            <img
-              src="./3d1.avif"
-              alt="SLA Смола"
-              width="400"
-              height="300"
-              loading="lazy"
-              decoding="async"
-              class="gallery-img"
-            />
-          </div>
-          <div data-aos="zoom-in" data-aos-delay="300">
-            <img
-              src="./3d1.avif"
-              alt="3D Моделиране"
-              width="400"
-              height="300"
-              loading="lazy"
-              decoding="async"
-              class="gallery-img"
-            />
-          </div>
-          <div data-aos="zoom-in" data-aos-delay="400">
-            <img
-              src="./3d1.avif"
-              alt="Прототип"
-              width="400"
-              height="300"
-              loading="lazy"
-              decoding="async"
-              class="gallery-img"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Цени -->
-    <section id="pricing" class="py-section pricing">
-      <div class="container">
-        <h2 class="section-title" data-aos="fade-up">Ценоразпис</h2>
-        <div class="title-underline accent" data-aos="fade-up"></div>
-
-        <div class="grid grid-2" style="max-width: 900px; margin: 0 auto">
-          <div class="card price-card" data-aos="fade-right">
-            <h4>FDM Принтиране</h4>
-            <p class="price-subtitle">PLA / PETG (Standart)</p>
-            <div class="price-amount">0.20 лв. <span>/ грам</span></div>
-            <ul class="price-features">
-              <li><i class="fas fa-check"></i> Висока здравина</li>
-              <li><i class="fas fa-check"></i> Прототипи и макети</li>
-              <li><i class="fas fa-check"></i> До 100 µm височина на слоя</li>
-            </ul>
-          </div>
-
-          <div class="card price-card featured" data-aos="fade-left">
-            <h4>SLA Принтиране</h4>
-            <p class="price-subtitle">Resin (Standart)</p>
-            <div class="price-amount">0.90 лв. <span>/ грам</span></div>
-            <ul class="price-features">
-              <li><i class="fas fa-check"></i> Изключителна точност</li>
-              <li><i class="fas fa-check"></i> Гладки повърхности</li>
-              <li><i class="fas fa-check"></i> До 25 µm височина на слоя</li>
-            </ul>
+          <div class="grid grid-4">
+            <div data-aos="zoom-in" data-aos-delay="100">
+              <img
+                src="./3d1.avif"
+                alt="FDM принтирана част"
+                width="400"
+                height="300"
+                loading="lazy"
+                decoding="async"
+                class="gallery-img"
+              />
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="200">
+              <img
+                src="./3d1.avif"
+                alt="SLA принтиране със смола"
+                width="400"
+                height="300"
+                loading="lazy"
+                decoding="async"
+                class="gallery-img"
+              />
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="300">
+              <img
+                src="./3d1.avif"
+                alt="Процес на 3D моделиране"
+                width="400"
+                height="300"
+                loading="lazy"
+                decoding="async"
+                class="gallery-img"
+              />
+            </div>
+            <div data-aos="zoom-in" data-aos-delay="400">
+              <img
+                src="./3d1.avif"
+                alt="Готов 3D прототип"
+                width="400"
+                height="300"
+                loading="lazy"
+                decoding="async"
+                class="gallery-img"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Контакти -->
-    <section id="contact" class="py-section contact">
-      <div class="container" data-aos="zoom-in-up">
-        <h2 class="section-title">Готов за печат? <span>Почни днес!</span></h2>
-        <p>
-          Изпратете ни вашия .STL файл или скица и нашите специалисти ще ви
-          отговорят в рамките на 2 часа с безплатна, точна оферта.
-        </p>
-        <a
-          href="mailto:print@3dprintpro.bg"
-          class="btn btn-brand"
-          style="font-size: 1.3rem; padding: 1.2rem 3rem"
-        >
-          Изпрати файл
-          <i class="fas fa-paper-plane" style="margin-left: 10px"></i>
-        </a>
-        <div style="margin-top: 2rem; color: #64748b">
-          Телефон: +359 88 123 4567
+      <!-- Цени -->
+      <section id="pricing" class="py-section pricing">
+        <div class="container">
+          <h2 class="section-title" data-aos="fade-up">Ценоразпис</h2>
+          <div class="title-underline accent" data-aos="fade-up"></div>
+
+          <div class="grid grid-2" style="max-width: 900px; margin: 0 auto">
+            <div class="card price-card" data-aos="fade-right">
+              <!-- Сменено от H4 на H3 за правилна йерархия -->
+              <h3>FDM Принтиране</h3>
+              <p class="price-subtitle">PLA / PETG (Standart)</p>
+              <div class="price-amount">0.20 лв. <span>/ грам</span></div>
+              <ul class="price-features">
+                <li>
+                  <i class="fas fa-check" aria-hidden="true"></i> Висока
+                  здравина
+                </li>
+                <li>
+                  <i class="fas fa-check" aria-hidden="true"></i> Прототипи и
+                  макети
+                </li>
+                <li>
+                  <i class="fas fa-check" aria-hidden="true"></i> До 100 µm
+                  височина на слоя
+                </li>
+              </ul>
+            </div>
+
+            <div class="card price-card featured" data-aos="fade-left">
+              <!-- Сменено от H4 на H3 за правилна йерархия -->
+              <h3>SLA Принтиране</h3>
+              <p class="price-subtitle">Resin (Standart)</p>
+              <div class="price-amount">0.90 лв. <span>/ грам</span></div>
+              <ul class="price-features">
+                <li>
+                  <i class="fas fa-check" aria-hidden="true"></i> Изключителна
+                  точност
+                </li>
+                <li>
+                  <i class="fas fa-check" aria-hidden="true"></i> Гладки
+                  повърхности
+                </li>
+                <li>
+                  <i class="fas fa-check" aria-hidden="true"></i> До 25 µm
+                  височина на слоя
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- Контакти -->
+      <section id="contact" class="py-section contact">
+        <div class="container" data-aos="zoom-in-up">
+          <h2 class="section-title">
+            Готов за печат? <span>Почни днес!</span>
+          </h2>
+          <p>
+            Изпратете ни вашия .STL файл или скица и нашите специалисти ще ви
+            отговорят в рамките на 2 часа с безплатна, точна оферта.
+          </p>
+          <a
+            href="mailto:print@3dprintpro.bg"
+            class="btn btn-brand"
+            style="font-size: 1.3rem; padding: 1.2rem 3rem"
+          >
+            Изпрати файл
+            <i
+              class="fas fa-paper-plane"
+              aria-hidden="true"
+              style="margin-left: 10px"
+            ></i>
+          </a>
+          <!-- Оправен цветови контраст и направен активен линк за мобилни (Tap Target) -->
+          <div style="margin-top: 2.5rem">
+            <a
+              href="tel:+359881234567"
+              style="
+                color: #cbd5e1;
+                font-size: 1.1rem;
+                padding: 0.5rem;
+                display: inline-block;
+              "
+            >
+              Телефон: +359 88 123 4567
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <!-- Footer -->
     <footer>
       <div class="container">
         <p>
           &copy; 2026 3D Print Pro. Всички права запазени. Изработено с мисъл за
-          скорост.
+          скорост и достъпност.
         </p>
       </div>
     </footer>
 
-    <!-- AOS Script (Зарежда се най-отдолу, за да не бави страницата) -->
+    <!-- AOS Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <script>
-      // Изчакваме страницата да зареди преди да пуснем анимациите
       document.addEventListener("DOMContentLoaded", function () {
         AOS.init({
           once: true,
-          offset: 50, // Анимацията започва малко по-рано
+          offset: 50,
           duration: 800,
         });
       });
