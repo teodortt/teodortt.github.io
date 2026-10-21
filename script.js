@@ -9,8 +9,14 @@ const repeatToggle = document.getElementById('repeatToggle');
 const rememberMeCheckbox = document.getElementById('remember-me');
 const submitButton = document.getElementById("submitButton");
 
+const API_BASE_URL = "https://device-api.smila-cloud.dev.jdm.de/device-api";
+// Refresh this many ms before the access token expires (token lifetime is ~90s).
+const TOKEN_REFRESH_MARGIN_MS = 20000;
+
 let accessToken = localStorage.getItem("accessToken");
 let intervalRequestId, intervalCounterId;
+let refreshTimeoutId = null;
+let refreshPromise = null;
 
 const storedUsername = localStorage.getItem('username');
 const storedPassword = localStorage.getItem('password');
@@ -26,18 +32,151 @@ if (accessToken) {
     loginForm.style.display = "block";
 }
 
+const getTokenExpiryMs = (token) => {
+    try {
+        const payloadBase64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+        const payload = JSON.parse(atob(payloadBase64));
+        return payload.exp ? payload.exp * 1000 : null;
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+    }
+};
+
+const saveTokens = (data) => {
+    if (typeof data.accessToken !== "string" || !data.accessToken ||
+        typeof data.refreshToken !== "string" || !data.refreshToken) {
+        throw new Error("Authentication response is missing valid tokens.");
+    }
+
+    const expiresAt =
+        getTokenExpiryMs(data.accessToken) ??
+        (Number.isFinite(data.accessTokenExpiresIn) && data.accessTokenExpiresIn > 0
+            ? Date.now() + data.accessTokenExpiresIn * 1000
+            : null);
+    if (!expiresAt || expiresAt <= Date.now()) {
+        throw new Error("Authentication response has no valid access token expiry.");
+    }
+
+    accessToken = data.accessToken;
+    localStorage.setItem("accessToken", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
+
+    localStorage.setItem("accessTokenExpiresAt", String(expiresAt));
+
+    scheduleTokenRefresh();
+};
+
+const getAccessTokenExpiresAt = () => {
+    const stored = Number(localStorage.getItem("accessTokenExpiresAt"));
+    if (stored) return stored;
+    const token = localStorage.getItem("accessToken");
+    return token ? getTokenExpiryMs(token) : null;
+};
+
+const scheduleTokenRefresh = () => {
+    clearTimeout(refreshTimeoutId);
+    const expiresAt = getAccessTokenExpiresAt();
+    if (!expiresAt) return;
+
+    const delay = Math.max(expiresAt - Date.now() - TOKEN_REFRESH_MARGIN_MS, 0);
+    refreshTimeoutId = setTimeout(() => {
+        refreshAccessToken().catch(() => { });
+    }, delay);
+};
+
+const isAccessTokenExpiring = () => {
+    const expiresAt = getAccessTokenExpiresAt();
+    return !expiresAt || expiresAt - Date.now() <= TOKEN_REFRESH_MARGIN_MS;
+};
+
+// Serializes refreshes across browser tabs that share localStorage.
+const withRefreshLock = (callback) =>
+    navigator.locks?.request
+        ? navigator.locks.request("smila-token-refresh", callback)
+        : callback();
+
+// Refresh tokens are single-use (rotated on every refresh), so concurrent
+// callers (and tabs) must not send the same refresh token twice.
+// `rejectedAccessToken` is a token the server returned 401 for; it forces a
+// refresh even if the token has not reached its expiry time yet.
+const refreshAccessToken = (rejectedAccessToken = null) => {
+    if (refreshPromise) return refreshPromise;
+
+    refreshPromise = withRefreshLock(async () => {
+        const currentAccessToken = localStorage.getItem("accessToken");
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        if (!currentAccessToken || !refreshToken) {
+            handleLogout();
+            throw new Error("No tokens available to refresh.");
+        }
+
+        // Another tab may have refreshed while we were waiting for the lock.
+        if (currentAccessToken !== rejectedAccessToken && !isAccessTokenExpiring()) {
+            accessToken = currentAccessToken;
+            scheduleTokenRefresh();
+            return currentAccessToken;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/authentication/refresh-login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ accessToken: currentAccessToken, refreshToken }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            saveTokens(data);
+            console.log("Access token refreshed.");
+            return data.accessToken;
+        } catch (error) {
+            console.error("Error refreshing token:", error);
+            handleLogout();
+            throw error;
+        }
+    }).finally(() => {
+        refreshPromise = null;
+    });
+
+    return refreshPromise;
+};
+
+const getValidAccessToken = async () => {
+    if (isAccessTokenExpiring()) {
+        return refreshAccessToken();
+    }
+    return localStorage.getItem("accessToken");
+};
+
+// Keep tabs in sync: pick up tokens refreshed elsewhere and follow logouts.
+window.addEventListener("storage", (event) => {
+    if (event.key === "accessTokenExpiresAt" && event.newValue) {
+        accessToken = localStorage.getItem("accessToken");
+        scheduleTokenRefresh();
+    } else if (event.key === "accessToken" && !event.newValue) {
+        clearTimeout(refreshTimeoutId);
+        location.reload();
+    }
+});
+
 async function handleLogin() {
+    if (loginButton.disabled) return;
+
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     const messageElement = document.getElementById("loginMessage");
     messageElement.textContent = "";
-
     loginButton.disabled = true;
     loginButton.textContent = "Logging in...";
 
     try {
         const response = await fetch(
-            "https://device-api.smila-cloud.dev.jdm.de/device-api/authentication/login",
+            `${API_BASE_URL}/authentication/login`,
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -50,12 +189,11 @@ async function handleLogin() {
         }
 
         const data = await response.json();
-        localStorage.setItem("accessToken", data.accessToken);
-        accessToken = data.accessToken;
+        saveTokens(data);
 
         if (rememberMeCheckbox.checked) {
-            localStorage.setItem('username', document.getElementById('username').value);
-            localStorage.setItem('password', document.getElementById('password').value);
+            localStorage.setItem('username', username);
+            localStorage.setItem('password', password);
         }
 
         loginForm.style.display = "none";
@@ -64,6 +202,7 @@ async function handleLogin() {
     } catch (error) {
         console.error("Error during login:", error);
         messageElement.textContent = "Login failed. Please try again.";
+    } finally {
         loginButton.disabled = false;
         loginButton.textContent = "Login";
     }
@@ -206,18 +345,23 @@ async function updateDeviceStatus() {
     }
 
 
+    const postStatus = (token) =>
+        fetch(`${API_BASE_URL}/devicestatusinfo`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+        });
+
     try {
-        const response = await fetch(
-            "https://device-api.smila-cloud.dev.jdm.de/device-api/devicestatusinfo",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                },
-                body: JSON.stringify(payload),
-            }
-        );
+        const token = await getValidAccessToken();
+        let response = await postStatus(token);
+
+        if (response.status === 401) {
+            response = await postStatus(await refreshAccessToken(token));
+        }
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -229,7 +373,6 @@ async function updateDeviceStatus() {
         console.error("Error during status submission:", error);
         statusMessage.textContent =
             "Failed to submit device status.";
-        checkTokenExpiry();
     }
 }
 
@@ -273,37 +416,28 @@ const handleClearInterval = () => {
 }
 
 const handleLogout = () => {
+    clearTimeout(refreshTimeoutId);
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessTokenExpiresAt");
     location.reload();
 };
 
-const checkTokenExpiry = () => {
-    const accessToken = localStorage.getItem('accessToken');
-
-    if (!accessToken) {
+const initAuthSession = () => {
+    if (!localStorage.getItem('accessToken')) {
         console.log('No access token found.');
         return;
     }
 
-    try {
-        const payloadBase64 = accessToken.split('.')[1];
-        const payloadJson = atob(payloadBase64);
-        const payload = JSON.parse(payloadJson);
-
-        if (!payload.exp) {
-            console.log('No expiration time (exp) in token.');
-            return;
-        }
-
-        const currentTime = Math.floor(Date.now() / 1000);
-        if (payload.exp < currentTime) {
-            handleLogout();
-        } else {
-            console.log('Token is valid.');
-        }
-    } catch (error) {
-        console.error('Error decoding token:', error);
+    if (!localStorage.getItem('refreshToken')) {
+        // Session from before refresh support; can't be renewed.
+        const expiresAt = getAccessTokenExpiresAt();
+        if (!expiresAt || expiresAt < Date.now()) handleLogout();
+        return;
     }
+
+    // Refreshes immediately if the token is already expired or about to expire.
+    scheduleTokenRefresh();
 }
 
 const toggleTheme = (theme = null) => {
@@ -335,7 +469,7 @@ const toggleTheme = (theme = null) => {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    checkTokenExpiry();
+    initAuthSession();
     toggleTheme(localStorage.getItem("theme"));
 });
 
