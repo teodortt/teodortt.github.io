@@ -9,16 +9,20 @@ const repeatToggle = document.getElementById('repeatToggle');
 const rememberMeCheckbox = document.getElementById('remember-me');
 const submitButton = document.getElementById("submitButton");
 const environmentSelect = document.getElementById("environmentSelect");
+const sessionInfo = document.getElementById("sessionInfo");
+const sessionEnvironment = document.getElementById("sessionEnvironment");
+const sessionDevice = document.getElementById("sessionDevice");
 
 const ENVIRONMENT_STORAGE_KEY = "apiEnvironment";
 const apiBaseUrls = {
     dev: "https://device-api.smila-cloud.dev.jdm.de/device-api",
+    test: "https://api-test.smila.jdm.de/care/device",
     dev01: "https://api-dev01.smila.jdm.de/care/device",
     dev02: "https://api-dev02.smila.jdm.de/care/device",
     dev03: "https://api-dev03.smila.jdm.de/care/device",
     dev04: "https://api-dev04.smila.jdm.de/care/device",
 };
-const environments = ["dev", "dev01", "dev02", "dev03", "dev04"];
+const environments = ["dev", "test", "dev01", "dev02", "dev03", "dev04"];
 const storedEnvironment = localStorage.getItem(ENVIRONMENT_STORAGE_KEY);
 environmentSelect.value = environments.includes(storedEnvironment) ? storedEnvironment : "dev";
 localStorage.setItem(ENVIRONMENT_STORAGE_KEY, environmentSelect.value);
@@ -41,8 +45,16 @@ if (storedUsername) {
 if (accessToken) {
     appContent.style.display = "block";
     navbar.style.display = "flex";
+    showSessionInfo(sessionStorage.getItem("deviceUsername") || storedUsername);
 } else {
     loginForm.style.display = "block";
+}
+
+function showSessionInfo(username) {
+    sessionEnvironment.textContent =
+        `Environment: ${environmentSelect.options[environmentSelect.selectedIndex].textContent}`;
+    sessionDevice.textContent = `Device: ${username || "Unknown"}`;
+    sessionInfo.style.display = "flex";
 }
 
 const getTokenExpiryMs = (token) => {
@@ -209,9 +221,11 @@ async function handleLogin() {
             localStorage.setItem('password', password);
         }
 
+        sessionStorage.setItem("deviceUsername", username);
         loginForm.style.display = "none";
         appContent.style.display = "block";
         navbar.style.display = "flex";
+        showSessionInfo(username);
     } catch (error) {
         console.error("Error during login:", error);
         messageElement.textContent = "Login failed. Please try again.";
@@ -433,6 +447,7 @@ const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("accessTokenExpiresAt");
+    sessionStorage.removeItem("deviceUsername");
     location.reload();
 };
 

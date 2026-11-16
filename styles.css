@@ -11,21 +11,27 @@ body {
 
 .environment-selector {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 360px;
-  margin: 0 auto 20px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+  margin: 22px 0 24px;
+  padding: 12px;
+  box-sizing: border-box;
+  background-color: #f7f9fc;
+  border: 1px solid #e1e6ee;
+  border-radius: 8px;
 }
 
 .environment-selector label {
-  flex: 0 0 auto;
+  color: #4b5563;
+  font-size: 0.85rem;
+  padding-top: 0;
   height: auto;
-  white-space: nowrap;
 }
 
 .environment-selector select {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
 }
 
 .logoContainer {
@@ -35,6 +41,14 @@ body {
   gap: 10px;
   color: white;
   font-weight: bold;
+}
+
+.session-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: white;
+  font-size: 0.9rem;
 }
 
 nav {
