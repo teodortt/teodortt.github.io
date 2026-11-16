@@ -9,6 +9,25 @@ body {
   padding: 20px;
 }
 
+.environment-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 360px;
+  margin: 0 auto 20px;
+}
+
+.environment-selector label {
+  flex: 0 0 auto;
+  height: auto;
+  white-space: nowrap;
+}
+
+.environment-selector select {
+  flex: 1;
+  min-width: 0;
+}
+
 .logoContainer {
   display: flex;
   justify-content: center;

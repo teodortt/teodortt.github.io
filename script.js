@@ -8,8 +8,21 @@ const statusMessage = document.getElementById("statusMessage");
 const repeatToggle = document.getElementById('repeatToggle');
 const rememberMeCheckbox = document.getElementById('remember-me');
 const submitButton = document.getElementById("submitButton");
+const environmentSelect = document.getElementById("environmentSelect");
 
-const API_BASE_URL = "https://device-api.smila-cloud.dev.jdm.de/device-api";
+const ENVIRONMENT_STORAGE_KEY = "apiEnvironment";
+const apiBaseUrls = {
+    dev: "https://device-api.smila-cloud.dev.jdm.de/device-api",
+    dev01: "https://api-dev01.smila.jdm.de/care/device",
+    dev02: "https://api-dev02.smila.jdm.de/care/device",
+    dev03: "https://api-dev03.smila.jdm.de/care/device",
+    dev04: "https://api-dev04.smila.jdm.de/care/device",
+};
+const environments = ["dev", "dev01", "dev02", "dev03", "dev04"];
+const storedEnvironment = localStorage.getItem(ENVIRONMENT_STORAGE_KEY);
+environmentSelect.value = environments.includes(storedEnvironment) ? storedEnvironment : "dev";
+localStorage.setItem(ENVIRONMENT_STORAGE_KEY, environmentSelect.value);
+const getApiBaseUrl = () => apiBaseUrls[environmentSelect.value];
 // Refresh this many ms before the access token expires (token lifetime is ~90s).
 const TOKEN_REFRESH_MARGIN_MS = 20000;
 
@@ -120,7 +133,7 @@ const refreshAccessToken = (rejectedAccessToken = null) => {
         }
 
         try {
-            const response = await fetch(`${API_BASE_URL}/authentication/refresh-login`, {
+            const response = await fetch(`${getApiBaseUrl()}/authentication/refresh-login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ accessToken: currentAccessToken, refreshToken }),
@@ -176,7 +189,7 @@ async function handleLogin() {
 
     try {
         const response = await fetch(
-            `${API_BASE_URL}/authentication/login`,
+            `${getApiBaseUrl()}/authentication/login`,
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -346,7 +359,7 @@ async function updateDeviceStatus() {
 
 
     const postStatus = (token) =>
-        fetch(`${API_BASE_URL}/devicestatusinfo`, {
+        fetch(`${getApiBaseUrl()}/devicestatusinfo`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -422,6 +435,13 @@ const handleLogout = () => {
     localStorage.removeItem("accessTokenExpiresAt");
     location.reload();
 };
+
+environmentSelect.addEventListener("change", () => {
+    localStorage.setItem(ENVIRONMENT_STORAGE_KEY, environmentSelect.value);
+    if (localStorage.getItem("accessToken")) {
+        handleLogout();
+    }
+});
 
 const initAuthSession = () => {
     if (!localStorage.getItem('accessToken')) {

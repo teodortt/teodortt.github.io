@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -24,6 +24,17 @@
     </nav>
 
     <div id="app">
+      <div class="environment-selector">
+        <label for="environmentSelect">Environment:</label>
+        <select id="environmentSelect">
+          <option value="dev">Current (device-api)</option>
+          <option value="dev01">dev-01</option>
+          <option value="dev02">dev-02</option>
+          <option value="dev03">dev-03</option>
+          <option value="dev04">dev-04</option>
+        </select>
+      </div>
+
       <div id="login-form" style="display: none">
         <img src="logo.svg" alt="logo" />
         <form style="display: flex; flex-direction: column; gap: 30px">
@@ -38,7 +49,11 @@
               <input
                 id="toggle-password"
                 type="checkbox"
-                onclick="document.getElementById('password').type = this.checked ? 'text' : 'password'"
+                onclick="
+                  document.getElementById('password').type = this.checked
+                    ? 'text'
+                    : 'password'
+                "
               />
             </span>
           </label>
